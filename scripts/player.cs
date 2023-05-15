@@ -6,22 +6,22 @@ public partial class player : CharacterBody2D
 	public const float Speed = 150.0f;
 	public const float Acceleration = 16.0f;
 	public const float JumpVelocity = -150.0f;
-	private Sprite2D Sprite;
-
-	private float PhysicsDelta = 1.0f / ProjectSettings.GetSetting("physics/common/physics_ticks_per_second").AsSingle(); 
+	private Sprite2D _sprite;
+	
+	private float _physicsDelta = 1.0f / ProjectSettings.GetSetting("physics/common/physics_ticks_per_second").AsSingle(); 
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
 	public override void _Ready()
 	{
-		Sprite = GetNode<Sprite2D>("Sprite2D");
+		_sprite = GetNode<Sprite2D>("Sprite2D");
 	}
 
 	public override void _Process(double delta)
 	{
 		// Sprite movement interpolation.
-		Sprite.Position = Vector2.Zero.Lerp(Velocity * PhysicsDelta, (float)Engine.GetPhysicsInterpolationFraction());
+		_sprite.Position = Vector2.Zero.Lerp(Velocity * _physicsDelta, (float)Engine.GetPhysicsInterpolationFraction());
 	}
 
 	public override void _PhysicsProcess(double delta)
