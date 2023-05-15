@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://ccv7t34bk3xvy"]
+[gd_scene load_steps=4 format=3 uid="uid://ccv7t34bk3xvy"]
 
 [ext_resource type="PackedScene" uid="uid://csiaty10i3jsm" path="res://scenes/world.tscn" id="1_f3bib"]
-[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_48jkg"]
+[ext_resource type="PackedScene" uid="uid://wih4sqiyy50m" path="res://scenes/player.tscn" id="2_48jkg"]
+[ext_resource type="PackedScene" uid="uid://cuaqna7h05s1g" path="res://scenes/flyer.tscn" id="2_648yq"]
 
 [node name="Main" type="Node2D"]
 
@@ -9,5 +10,9 @@
 
 [node name="Player" parent="." instance=ExtResource("2_48jkg")]
 position = Vector2(0, -8)
+
+[node name="Flyer" parent="." node_paths=PackedStringArray("_player") instance=ExtResource("2_648yq")]
+position = Vector2(24, -26)
+_player = NodePath("../Player")
 
 [node name="World" parent="." instance=ExtResource("1_f3bib")]

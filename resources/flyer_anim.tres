@@ -1,0 +1,37 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://b22rygad7y4xb"]
+
+[ext_resource type="Texture2D" uid="uid://bddp2m6rn7wvr" path="res://assets/sprites/monochrome_tilemap_transparent_packed.png" id="1_2ha5q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ew75"]
+atlas = ExtResource("1_2ha5q")
+region = Rect2(32, 304, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1pobg"]
+atlas = ExtResource("1_2ha5q")
+region = Rect2(0, 304, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dbcym"]
+atlas = ExtResource("1_2ha5q")
+region = Rect2(16, 304, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ew75")
+}],
+"loop": true,
+"name": &"Death",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1pobg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dbcym")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 12.0
+}]
