@@ -1,23 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://cuaqna7h05s1g"]
+[gd_scene load_steps=6 format=3 uid="uid://b6pcofl3e18cs"]
 
-[ext_resource type="Script" path="res://scripts/flyer.cs" id="1_8tu6x"]
+[ext_resource type="Script" path="res://scripts/Flyer.cs" id="1_2c8no"]
 [ext_resource type="SpriteFrames" uid="uid://b22rygad7y4xb" path="res://resources/flyer_anim.tres" id="1_w6ukf"]
+[ext_resource type="Script" path="res://scripts/ImpulseArea.cs" id="3_b63cs"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_trmry"]
-radius = 6.0
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kl1xe"]
+radius = 4.0
 
 [node name="Flyer" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 2
-script = ExtResource("1_8tu6x")
+script = ExtResource("1_2c8no")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_trmry")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -1)
 sprite_frames = ExtResource("1_w6ukf")
 animation = &"Idle"
 autoplay = "Idle"
 frame_progress = 0.968872
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("character")]
+script = ExtResource("3_b63cs")
+character = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_kl1xe")

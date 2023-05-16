@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class player : CharacterBody2D
+public sealed partial class Player : CharacterBody2D
 {
 	public const float Speed = 150.0f;
 	public const float Acceleration = 16.0f;
@@ -40,7 +40,10 @@ public partial class player : CharacterBody2D
 		// As good practice, you should replace UI actions with custom gameplay actions.
 		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
 
-		velocity.X = Mathf.Lerp(velocity.X, direction.X * Speed, Acceleration * (float)delta);
+		if (IsOnFloor())
+			velocity.X = Mathf.Lerp(velocity.X, direction.X * Speed, Acceleration * (float)delta);
+		else
+			velocity.X = Mathf.Lerp(velocity.X, direction.X * Speed, (Acceleration / 5.0f) * (float)delta);
 
 		Velocity = velocity;
 		MoveAndSlide();

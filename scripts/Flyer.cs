@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class flyer : CharacterBody2D
+public partial class Flyer : CharacterBody2D
 {
 	public const float Speed = 70.0f;
 	
