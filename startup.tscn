@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://b44805jjthobn"]
+
+[sub_resource type="GDScript" id="GDScript_wb6pg"]
+script/source = "extends Node
+
+const main = preload(\"res://main.tscn\")
+
+func _ready() -> void:
+	get_tree().change_scene_to_packed(main)
+"
+
+[node name="Startup" type="Node"]
+script = SubResource("GDScript_wb6pg")
