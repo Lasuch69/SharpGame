@@ -1,6 +1,6 @@
-[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://b22rygad7y4xb"]
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://723dr8pvca3g"]
 
-[ext_resource type="Texture2D" uid="uid://bddp2m6rn7wvr" path="res://assets/sprites/monochrome_tilemap_transparent_packed.png" id="1_2ha5q"]
+[ext_resource type="Texture2D" uid="uid://bddp2m6rn7wvr" path="res://assets/sprites/tilemap/monochrome_tilemap_transparent_packed.png" id="1_2ha5q"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2ew75"]
 atlas = ExtResource("1_2ha5q")

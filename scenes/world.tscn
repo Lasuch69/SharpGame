@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://csiaty10i3jsm"]
 
-[ext_resource type="TileSet" uid="uid://bsbq2mxkkcg16" path="res://resources/tile_set.tres" id="1_vh6go"]
+[ext_resource type="TileSet" uid="uid://b8kdro41itmwg" path="res://resources/tile_set.tres" id="1_vh6go"]
 
 [sub_resource type="Gradient" id="Gradient_thv1l"]
 

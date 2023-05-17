@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://c4qstovn0qtt0"
-path="res://.godot/imported/Kenney Pixel Square.ttf-64bdf49ba5e0eb79f81157a4c2d9cf94.fontdata"
+uid="uid://chwgu8slm0oxm"
+path="res://.godot/imported/6Px2bus-draR.ttf-6a5f905060c6e278631c56a191856a19.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/Kenney Pixel Square.ttf"
-dest_files=["res://.godot/imported/Kenney Pixel Square.ttf-64bdf49ba5e0eb79f81157a4c2d9cf94.fontdata"]
+source_file="res://assets/fonts/6px2bus-font/6Px2bus-draR.ttf"
+dest_files=["res://.godot/imported/6Px2bus-draR.ttf-6a5f905060c6e278631c56a191856a19.fontdata"]
 
 [params]
 
