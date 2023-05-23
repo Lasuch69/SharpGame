@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bdiobw2ao84e3"]
+[gd_scene load_steps=5 format=3 uid="uid://bdiobw2ao84e3"]
 
 [ext_resource type="Script" path="res://scripts/Player.cs" id="1_kuu2q"]
 [ext_resource type="Texture2D" uid="uid://dif4f7yednbgr" path="res://assets/sprites/player.png" id="2_hnpgu"]
+[ext_resource type="Script" path="res://scripts/HealthComponent.cs" id="3_0t41e"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s5uvd"]
 radius = 6.0
@@ -15,3 +16,8 @@ shape = SubResource("CapsuleShape2D_s5uvd")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_hnpgu")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("3_0t41e")
+MaxHealth = 3
+Health = 3

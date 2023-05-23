@@ -4,26 +4,50 @@ using System;
 public partial class ImpulseArea : Area2D
 {
 	[Export]
-	private CharacterBody2D character;
+	private Timer _timer;
+
+	private Player _player;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
-	{
+	{	
+		_timer.Timeout += _OnTimerTimeout;
 		BodyEntered += _OnBodyEntered;
+		BodyExited += _OnBodyExited;
+	}
+	
+	public void ApplyDamage()
+	{
+		HealthComponent healthComponent = _player.GetNode<HealthComponent>("HealthComponent");
+		
+		_player.Velocity = (Vector2.Up * 150.0f);
+		healthComponent.Health -= 1;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public void _OnTimerTimeout()
 	{
+		ApplyDamage();
 	}
 
 	public void _OnBodyEntered(Node2D body)
 	{
-		if (body is Player player)
-		{
-			float direction = Vector2.Zero.DirectionTo(new Vector2(character.Velocity.X, 0.0f)).X;
-			player.Velocity = (Vector2.Up * 100.0f) + ((Vector2.Right * direction) * 150.0f);
-			GD.Print(direction);
-		}
+		if (!(body is Player))
+			return;
+
+		_player = (Player)body;
+
+		ApplyDamage();
+
+		_timer.Start();
+	}
+
+	public void _OnBodyExited(Node2D body)
+	{
+		if (!(body is Player))
+			return;
+
+		_player = null;
+
+		_timer.Stop();
 	}
 }

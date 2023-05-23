@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6pcofl3e18cs"]
+[gd_scene load_steps=7 format=3 uid="uid://b6pcofl3e18cs"]
 
 [ext_resource type="Script" path="res://scripts/Flyer.cs" id="1_2c8no"]
 [ext_resource type="SpriteFrames" uid="uid://723dr8pvca3g" path="res://resources/flyer_anim.tres" id="1_w6ukf"]
+[ext_resource type="Script" path="res://scripts/HealthComponent.cs" id="2_6x0d2"]
 [ext_resource type="Script" path="res://scripts/ImpulseArea.cs" id="3_b63cs"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_trmry"]
@@ -28,9 +29,16 @@ frame_progress = 0.968872
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
-[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("character")]
+[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("_timer")]
 script = ExtResource("3_b63cs")
-character = NodePath("..")
+_timer = NodePath("Timer")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_kl1xe")
+
+[node name="Timer" type="Timer" parent="Area2D"]
+process_callback = 0
+wait_time = 2.0
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_6x0d2")
