@@ -1,31 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://csiaty10i3jsm"]
+[gd_scene load_steps=4 format=3 uid="uid://dofcij4c3wdjp"]
 
-[ext_resource type="TileSet" uid="uid://b8kdro41itmwg" path="res://resources/tile_set.tres" id="1_vh6go"]
-
-[sub_resource type="Gradient" id="Gradient_thv1l"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_gfbhu"]
-gradient = SubResource("Gradient_thv1l")
-width = 512
-height = 48
-fill_from = Vector2(1, 0.614679)
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_4moq1"]
-vertices = PackedVector2Array(-96, -80, 96, -80, 96, 0, -96, 0)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-96, -80, 96, -80, 96, 0, -96, 0)])
+[ext_resource type="PackedScene" uid="uid://bdiobw2ao84e3" path="res://scenes/player.tscn" id="2_26r7e"]
+[ext_resource type="PackedScene" uid="uid://b6pcofl3e18cs" path="res://scenes/flyer.tscn" id="3_218ji"]
+[ext_resource type="PackedScene" uid="uid://csiaty10i3jsm" path="res://scenes/level.tscn" id="4_0di3k"]
 
 [node name="World" type="Node2D"]
 
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource("1_vh6go")
-format = 2
-layer_0/tile_data = PackedInt32Array(1, 1048576, 9, 131073, 1048576, 11, 131072, 1048576, 11, 196607, 1048576, 11, 196606, 1048576, 11, 196605, 1048576, 11, 196604, 1048576, 11, 65532, 1048576, 9, 0, 1048576, 9, 65535, 1048576, 9, 65534, 1048576, 9, 65533, 1048576, 9, 2, 1048576, 9, 3, 1048576, 9, 4, 1048576, 9, 131074, 1048576, 11, 131075, 1048576, 11, 131076, 1048576, 11, 131077, 1048576, 11, 131078, 1048576, 11, 5, 1048576, 9, 6, 1245184, 12, 65529, 1245184, 9, 65530, 1048576, 9, 65531, 1048576, 9, 196601, 1048576, 11, 196602, 1048576, 11, 196603, 1048576, 11, 131079, 1048576, 11, 131080, 1114112, 11, 65544, 1114112, 10, 8, 1114112, 10, 7, 1048576, 6, -65529, 1048576, 6, -65528, 1114112, 10, -131064, 1114112, 10, -131065, 1048576, 6, -196601, 1048576, 6, -196600, 1114112, 10, -262136, 1114112, 10, -262137, 1048576, 6, 196600, 1048576, 11, 196599, 983040, 11, 131063, 983040, 10, 65528, 1048576, 6, 65527, 983040, 10, -9, 983040, 10, -8, 1048576, 6, -65544, 1048576, 6, -65545, 983040, 10, -131081, 983040, 10, -131080, 1048576, 6, -196617, 983040, 10, -196616, 1048576, 6, 65543, 1048576, 6, 65542, 1048576, 6, 65541, 1048576, 6, 65540, 1048576, 6, 65539, 1048576, 6, 65538, 1048576, 6, 65537, 1048576, 6, 65536, 1048576, 6, 131071, 1048576, 6, 131070, 1048576, 6, 131069, 1048576, 6, 131068, 1048576, 6, 131067, 1048576, 6, 131066, 1048576, 6, 131065, 1048576, 6, 131064, 1048576, 6, -262152, 1048576, 9, -262153, 983040, 9, -262151, 1114112, 9, -196615, 1114112, 10, -131079, 1114112, 10, -65543, 1114112, 10, -7, 1114112, 10, -262138, 983040, 10, -327674, 983040, 9, -327673, 1048576, 9, -327672, 1114112, 9, -196602, 983040, 10, -131066, 983040, 10, -65530, 983040, 10)
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = -624
+limit_top = -180
+limit_right = 640
+limit_bottom = 180
+limit_smoothed = true
+position_smoothing_enabled = true
+editor_draw_limits = true
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(0, 24)
-blend_mode = 2
-texture = SubResource("GradientTexture2D_gfbhu")
+[node name="Player" parent="." instance=ExtResource("2_26r7e")]
 
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-navigation_polygon = SubResource("NavigationPolygon_4moq1")
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
+remote_path = NodePath("../../Camera2D")
+
+[node name="Flyer" parent="." node_paths=PackedStringArray("_player") instance=ExtResource("3_218ji")]
+position = Vector2(46, -14)
+_player = NodePath("../Player")
+
+[node name="Level" parent="." instance=ExtResource("4_0di3k")]

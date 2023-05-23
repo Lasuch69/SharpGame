@@ -3,7 +3,7 @@
 [sub_resource type="GDScript" id="GDScript_wb6pg"]
 script/source = "extends Node
 
-const main = preload(\"res://main.tscn\")
+const main = preload(\"res://scenes/main.tscn\")
 
 func _ready() -> void:
 	get_tree().change_scene_to_packed(main)
