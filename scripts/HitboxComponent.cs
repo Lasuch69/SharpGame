@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class HitboxComponent : Area2D
 {
@@ -12,7 +13,7 @@ public partial class HitboxComponent : Area2D
 	[Export]
 	public String TargetGroup;
 
-	public Godot.Collections.Array Targets = new Godot.Collections.Array();
+	public List<Node2D> Targets = new();
 
 	public override void _Ready()
 	{
