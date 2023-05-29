@@ -4,11 +4,8 @@ using System;
 public partial class HealthComponent : Node
 {
 	[Signal]
-	public delegate void OnHealthChangedEventHandler(int health);
-	
-	private int _maxHealth = 1;
-	private int _health = 1;
-	
+	public delegate void HealthChangedEventHandler(int newhealth, int oldHealth);
+
 	[Export(PropertyHint.Range, "0,100,1,or_greater")]
 	public int MaxHealth
 	{
@@ -16,6 +13,9 @@ public partial class HealthComponent : Node
 		set
 		{
 			_maxHealth = value;
+
+			// clamp to new _maxHealth
+			Health = Health;
 		}
 	}
 
@@ -25,14 +25,15 @@ public partial class HealthComponent : Node
 		get => _health;
 		set
 		{
-			_health = Mathf.Clamp(value, 0, _maxHealth);
+			int newHealth = Mathf.Clamp(value, 0, _maxHealth);
 
-			EmitSignal(SignalName.OnHealthChanged, _health);
+			if (_health != newHealth)
+				EmitSignal(SignalName.HealthChanged, newHealth, _health);
+
+			_health = newHealth;
 		}
 	}
 
-	public override void _Ready()
-	{
-		OnHealthChanged += (health) => GD.Print(this, health);
-	}
+	private int _maxHealth = 1;
+	private int _health = 1;
 }

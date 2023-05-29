@@ -9,7 +9,7 @@
 radius = 6.0
 height = 16.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_kuu2q")
 
 [node name="HealthComponent" type="Node" parent="."]

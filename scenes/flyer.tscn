@@ -1,15 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6pcofl3e18cs"]
+[gd_scene load_steps=9 format=3 uid="uid://b6pcofl3e18cs"]
 
 [ext_resource type="Script" path="res://scripts/Flyer.cs" id="1_2c8no"]
 [ext_resource type="SpriteFrames" uid="uid://723dr8pvca3g" path="res://resources/flyer_anim.tres" id="1_w6ukf"]
 [ext_resource type="Script" path="res://scripts/HealthComponent.cs" id="2_6x0d2"]
-[ext_resource type="Script" path="res://scripts/ImpulseArea.cs" id="3_b63cs"]
 [ext_resource type="Script" path="res://scripts/PhysicsInterpolation.cs" id="3_hsadj"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_trmry"]
-radius = 4.0
+[ext_resource type="Script" path="res://scripts/DamageComponent.cs" id="3_u4vhe"]
+[ext_resource type="Script" path="res://scripts/HitboxComponent.cs" id="6_6po12"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kl1xe"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_trmry"]
 radius = 4.0
 
 [node name="Flyer" type="CharacterBody2D"]
@@ -21,6 +22,9 @@ script = ExtResource("1_2c8no")
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("2_6x0d2")
 
+[node name="DamageComponent" type="Node" parent="."]
+script = ExtResource("3_u4vhe")
+
 [node name="PhysicsInterpolation" type="Node2D" parent="."]
 script = ExtResource("3_hsadj")
 
@@ -31,18 +35,14 @@ animation = &"Idle"
 autoplay = "Idle"
 frame_progress = 0.968872
 
+[node name="HitboxComponent" type="Area2D" parent="."]
+script = ExtResource("6_6po12")
+TargetGroup = "Player"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("CircleShape2D_kl1xe")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_trmry")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-
-[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("_timer")]
-script = ExtResource("3_b63cs")
-_timer = NodePath("Timer")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_kl1xe")
-
-[node name="Timer" type="Timer" parent="Area2D"]
-process_callback = 0
-wait_time = 2.0

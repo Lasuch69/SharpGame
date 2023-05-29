@@ -8,16 +8,26 @@ public partial class Flyer : CharacterBody2D
 	[Export]
 	private CharacterBody2D _player;
 	
+	private DamageComponent _damage;
+	private HitboxComponent _hitbox;
+	
 	private NavigationAgent2D _navigationAgent;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_navigationAgent = GetNode<NavigationAgent2D>("NavigationAgent2D");
-		
 		_navigationAgent.VelocityComputed += _OnVelocityComputed;
-
 		_navigationAgent.TargetPosition = Position;
+
+		_damage = GetNode<DamageComponent>("DamageComponent");
+		_hitbox = GetNode<HitboxComponent>("HitboxComponent");
+
+		_hitbox.TargetEntered += (target) =>
+		{
+			HealthComponent targetHealthComponent = target.GetNode<HealthComponent>("HealthComponent");
+			_damage.ApplyDamage(targetHealthComponent);
+		};
 	}
 	
 	public override void _PhysicsProcess(double delta)
