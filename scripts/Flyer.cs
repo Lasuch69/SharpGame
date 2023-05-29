@@ -5,8 +5,7 @@ public partial class Flyer : CharacterBody2D
 {
 	public const float Speed = 70.0f;
 	
-	[Export]
-	private CharacterBody2D _player;
+	private Node2D _target;
 	
 	private DamageComponent _damage;
 	private HitboxComponent _hitbox;
@@ -20,6 +19,10 @@ public partial class Flyer : CharacterBody2D
 		_navigationAgent.VelocityComputed += _OnVelocityComputed;
 		_navigationAgent.TargetPosition = Position;
 
+		Game game = GetNode<Game>("/root/Game");
+		_target = game.Player;
+		game.PlayerChanged += (player) => _target = player;
+
 		_damage = GetNode<DamageComponent>("DamageComponent");
 		_hitbox = GetNode<HitboxComponent>("HitboxComponent");
 
@@ -32,7 +35,8 @@ public partial class Flyer : CharacterBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		_navigationAgent.TargetPosition = _player.Position;
+		if (_target != null)
+			_navigationAgent.TargetPosition = _target.Position;
 
 		Vector2 pathPosition = _navigationAgent.GetNextPathPosition();
 

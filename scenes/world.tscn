@@ -20,8 +20,7 @@ editor_draw_limits = true
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
 
-[node name="Flyer" parent="." node_paths=PackedStringArray("_player") instance=ExtResource("3_218ji")]
+[node name="Flyer" parent="." instance=ExtResource("3_218ji")]
 position = Vector2(46, -14)
-_player = NodePath("../Player")
 
 [node name="Level" parent="." instance=ExtResource("4_0di3k")]
