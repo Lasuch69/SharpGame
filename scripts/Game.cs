@@ -13,7 +13,7 @@ public partial class Game : Node
 		{
 			_player = value;
 
-			EmitSignal(SignalName.PlayerChanged);
+			EmitSignal(SignalName.PlayerChanged, _player);
 		}
 	}
 

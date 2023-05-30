@@ -1,0 +1,97 @@
+[gd_scene load_steps=6 format=3 uid="uid://0lot5q2epe2c"]
+
+[ext_resource type="Texture2D" uid="uid://bpgort8t0s0d4" path="res://assets/sprites/heart.tres" id="1_oax7v"]
+[ext_resource type="Script" path="res://scripts/Ui.cs" id="1_txlrb"]
+[ext_resource type="FontFile" uid="uid://chwgu8slm0oxm" path="res://assets/fonts/6px2bus-font/6Px2bus-draR.ttf" id="5_1mxrp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_v0gp1"]
+font = ExtResource("5_1mxrp")
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_l2c5a"]
+font = ExtResource("5_1mxrp")
+font_size = 12
+
+[node name="UI" type="Control" node_paths=PackedStringArray("TimerLabel", "HeartContainer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_txlrb")
+TimerLabel = NodePath("Timer/TimerLabel")
+HeartContainer = NodePath("Health/GridContainer")
+HeartTexture = ExtResource("1_oax7v")
+
+[node name="Timer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 16
+
+[node name="TimerLabel" type="Label" parent="Timer"]
+layout_mode = 2
+text = "00:00"
+label_settings = SubResource("LabelSettings_v0gp1")
+horizontal_alignment = 1
+
+[node name="Health" type="MarginContainer" parent="."]
+layout_mode = 1
+offset_right = 120.0
+offset_bottom = 48.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+
+[node name="GridContainer" type="GridContainer" parent="Health"]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 6
+
+[node name="TextureRect" type="TextureRect" parent="Health/GridContainer"]
+layout_mode = 2
+texture = ExtResource("1_oax7v")
+stretch_mode = 4
+
+[node name="Points" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Label" type="Label" parent="Points"]
+layout_mode = 2
+text = "000"
+label_settings = SubResource("LabelSettings_l2c5a")
+horizontal_alignment = 2
+
+[node name="Actions" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -85.0
+offset_top = -40.0
+offset_right = 85.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Actions"]
+layout_mode = 2
+alignment = 1
