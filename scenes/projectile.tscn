@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://bcpbypv8eknf7"]
+
+[ext_resource type="Script" path="res://scripts/HitboxComponent.cs" id="1_3fifd"]
+[ext_resource type="Script" path="res://scripts/Projectile.cs" id="1_28v6d"]
+[ext_resource type="Script" path="res://scripts/DamageComponent.cs" id="1_xdfwa"]
+[ext_resource type="Script" path="res://scripts/PhysicsInterpolation.cs" id="4_0cdrg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2unfc"]
+radius = 4.0
+
+[sub_resource type="Gradient" id="Gradient_qi8xh"]
+interpolation_mode = 1
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j4ss6"]
+gradient = SubResource("Gradient_qi8xh")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f4mkt"]
+radius = 2.0
+
+[node name="Projectile" type="CharacterBody2D" node_paths=PackedStringArray("DamageComponent", "HitboxComponent", "Timer")]
+collision_layer = 3
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_28v6d")
+DamageComponent = NodePath("DamageComponent")
+HitboxComponent = NodePath("HitboxComponent")
+Timer = NodePath("Timer")
+
+[node name="DamageComponent" type="Node" parent="."]
+script = ExtResource("1_xdfwa")
+
+[node name="HitboxComponent" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_3fifd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("CircleShape2D_2unfc")
+
+[node name="PhysicsInterpolation" type="Node2D" parent="."]
+script = ExtResource("4_0cdrg")
+
+[node name="Sprite2D" type="Sprite2D" parent="PhysicsInterpolation"]
+texture = SubResource("GradientTexture2D_j4ss6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_f4mkt")
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 3.0
+autostart = true

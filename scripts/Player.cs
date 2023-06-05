@@ -6,9 +6,14 @@ public sealed partial class Player : CharacterBody2D
 	public const float Speed = 150.0f;
 	public const float Acceleration = 16.0f;
 	public const float JumpVelocity = -150.0f;
-	
-	// Get the gravity from the project settings to be synced with RigidBody nodes.
-	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+
+	[Export]
+	public HealthComponent HealthComponent;
+
+	[Export]
+	public PackedScene Projectile;
+
+	public float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
 	public override void _Ready()
 	{
@@ -22,7 +27,7 @@ public sealed partial class Player : CharacterBody2D
 
 		// Add the gravity.
 		if (!IsOnFloor())
-			velocity.Y += gravity * (float)delta;
+			velocity.Y += Gravity * (float)delta;
 
 		// Handle Jump.
 		if (Input.IsActionPressed("ui_accept") && IsOnFloor())
@@ -39,5 +44,22 @@ public sealed partial class Player : CharacterBody2D
 
 		Velocity = velocity;
 		MoveAndSlide();
+	}
+
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsAction("shoot"))
+		{
+			Projectile projectile = (Projectile)Projectile.Instantiate();
+			
+			Vector2 mousePosition = GetGlobalMousePosition();
+			
+			projectile.Position = (this.Position.DirectionTo(mousePosition) * 12.0f) + this.Position;
+			projectile.Velocity = this.Position.DirectionTo(mousePosition) * 256.0f;
+			
+			projectile.HitboxComponent.TargetGroup = "Enemy";
+			
+			GetParent().AddChild(projectile);
+		}
 	}
 }

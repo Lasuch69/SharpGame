@@ -5,46 +5,49 @@ public partial class Flyer : CharacterBody2D
 {
 	public const float Speed = 70.0f;
 	
-	private Node2D _target;
+	public Node2D Target;
 	
-	private DamageComponent _damage;
-	private HitboxComponent _hitbox;
+	[Export]
+	public DamageComponent DamageComponent;
 	
-	private NavigationAgent2D _navigationAgent;
+	[Export]
+	public HealthComponent HealthComponent;
+
+	[Export]
+	public HitboxComponent HitboxComponent;
+	
+	[Export]
+	public NavigationAgent2D NavigationAgent;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_navigationAgent = GetNode<NavigationAgent2D>("NavigationAgent2D");
-		_navigationAgent.VelocityComputed += _OnVelocityComputed;
-		_navigationAgent.TargetPosition = Position;
+		NavigationAgent.VelocityComputed += _OnVelocityComputed;
+		NavigationAgent.TargetPosition = Position;
 
 		Game game = GetNode<Game>("/root/Game");
-		_target = game.Player;
-		game.PlayerChanged += (player) => _target = player;
+		Target = game.Player;
+		game.PlayerChanged += (player) => Target = player;
 
-		_damage = GetNode<DamageComponent>("DamageComponent");
-		_hitbox = GetNode<HitboxComponent>("HitboxComponent");
-
-		_hitbox.TargetEntered += (target) =>
+		HitboxComponent.TargetEntered += (target) =>
 		{
 			HealthComponent targetHealthComponent = target.GetNode<HealthComponent>("HealthComponent");
-			_damage.ApplyDamage(targetHealthComponent);
+			DamageComponent.ApplyDamage(targetHealthComponent);
 		};
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		if (_target != null)
-			_navigationAgent.TargetPosition = _target.Position;
+		if (Target != null)
+			NavigationAgent.TargetPosition = Target.Position;
 
-		Vector2 pathPosition = _navigationAgent.GetNextPathPosition();
+		Vector2 pathPosition = NavigationAgent.GetNextPathPosition();
 
 		Vector2 direction = Position.DirectionTo(pathPosition);
 		Vector2 velocity = direction * Speed;
 		
-		if (_navigationAgent.AvoidanceEnabled)
-			_navigationAgent.SetVelocity(velocity);
+		if (NavigationAgent.AvoidanceEnabled)
+			NavigationAgent.SetVelocity(velocity);
 		else
 			Velocity = velocity;
 
