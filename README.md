@@ -28,10 +28,18 @@ After installation follow the docs https://docs.godotengine.org/en/4.0/tutorials
 After export just run the game :>
 
 
+## Controls
+
+
+- `Arrows` - Move
+- `Space` - Jump
+- `LMB` or `RMB` - Shoot projectile
+
+
 ## Credits
 
 
-Used assets from https://kenney.nl/assets
+Assets used https://kenney.nl/assets
 
 
 ## License
