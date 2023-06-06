@@ -17,8 +17,8 @@ Projectile = ExtResource("2_oyhvt")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("3_0t41e")
-MaxHealth = 3
-Health = 3
+_maxHealth = 3
+_health = 3
 
 [node name="PhysicsInterpolation" type="Node2D" parent="."]
 script = ExtResource("2_jn4dg")

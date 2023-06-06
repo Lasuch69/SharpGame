@@ -12,7 +12,7 @@ font_size = 12
 font = ExtResource("5_1mxrp")
 font_size = 12
 
-[node name="UI" type="Control" node_paths=PackedStringArray("TimerLabel", "HeartContainer")]
+[node name="UI" type="Control" node_paths=PackedStringArray("TimerLabel", "HeartContainer", "ScoreLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,6 +23,7 @@ script = ExtResource("1_txlrb")
 TimerLabel = NodePath("Timer/TimerLabel")
 HeartContainer = NodePath("Health/GridContainer")
 HeartTexture = ExtResource("1_oax7v")
+ScoreLabel = NodePath("Score/ScoreLabel")
 
 [node name="Timer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -59,7 +60,17 @@ layout_mode = 2
 texture = ExtResource("1_oax7v")
 stretch_mode = 4
 
-[node name="Points" type="MarginContainer" parent="."]
+[node name="TextureRect2" type="TextureRect" parent="Health/GridContainer"]
+layout_mode = 2
+texture = ExtResource("1_oax7v")
+stretch_mode = 4
+
+[node name="TextureRect3" type="TextureRect" parent="Health/GridContainer"]
+layout_mode = 2
+texture = ExtResource("1_oax7v")
+stretch_mode = 4
+
+[node name="Score" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -72,7 +83,7 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="Label" type="Label" parent="Points"]
+[node name="ScoreLabel" type="Label" parent="Score"]
 layout_mode = 2
 text = "000"
 label_settings = SubResource("LabelSettings_l2c5a")

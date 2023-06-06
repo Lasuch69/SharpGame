@@ -25,6 +25,7 @@ NavigationAgent = NodePath("NavigationAgent2D")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("2_6x0d2")
+_maxHealth = 3
 
 [node name="DamageComponent" type="Node" parent="."]
 script = ExtResource("3_u4vhe")

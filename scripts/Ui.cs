@@ -12,6 +12,9 @@ public partial class Ui : Control
 	[Export]
 	public Texture2D HeartTexture;
 
+	[Export]
+	public Label ScoreLabel;
+
 	private ulong _timestamp;
 	private HealthComponent _playerHealth;
 	
@@ -33,8 +36,10 @@ public partial class Ui : Control
 			
 			_playerHealth.HealthChanged += OnPlayerHealthChanged;
 			
-			SetUiHearts(_playerHealth.Health);
+			SetUiHearts(_playerHealth.GetHealth());
 		};
+
+		_game.ScoreChanged += OnScoreChanged;
 		
 		_timestamp = Time.GetTicksMsec();
 	}
@@ -47,19 +52,17 @@ public partial class Ui : Control
 	private string GetTimeString(ulong timestamp)
 	{ 
 		int timeSeconds = (int)((Time.GetTicksMsec() - timestamp) / 1000);
-	   
-		Func<int, string> toString = (time) =>
-		{
-			if (time < 10)
-				return $"0{time}";
+		int timeMinutes = timeSeconds / 60;
 
-			return $"{time}";
+		Func<int, string> Format = (time) =>
+		{
+			return String.Format("{0, 0:D2}", time);
 		};
 
-		return $"{toString(timeSeconds / 60)}:{toString(timeSeconds % 60)}";
+		return String.Format("{0}:{1}", Format(timeMinutes), Format(timeSeconds % 60));
 	}
 
-	private void SetUiHearts(int amount)
+	private void SetUiHearts(int hearts)
 	{
 		var children = HeartContainer.GetChildren();
 
@@ -68,7 +71,7 @@ public partial class Ui : Control
 			HeartContainer.RemoveChild(child);
 		}
 
-		for (int i = 0; amount > i; i++)
+		for (int i = 0; hearts > i; i++)
 		{
 			TextureRect texture = new TextureRect();
 			
@@ -79,8 +82,18 @@ public partial class Ui : Control
 		}
 	}
 
-	public void OnPlayerHealthChanged(int newHealth, int oldHealth)
+	private void SetScore(int score)
+	{
+		ScoreLabel.Text = String.Format("{0, 0:D3}", score);
+	}
+
+	public void OnPlayerHealthChanged(int newHealth, int oldHealth, Node instigator)
 	{
 		SetUiHearts(newHealth);
+	}
+
+	public void OnScoreChanged(int score)
+	{
+		SetScore(score);
 	}
 }

@@ -3,6 +3,8 @@ using System;
 
 public partial class Projectile : CharacterBody2D
 {
+	public Node InstancedBy;
+
 	[Export]
 	public DamageComponent DamageComponent;
 	
@@ -17,7 +19,7 @@ public partial class Projectile : CharacterBody2D
 		HitboxComponent.TargetEntered += (target) =>
 		{
 			HealthComponent targetHealthComponent = target.GetNode<HealthComponent>("HealthComponent");
-			DamageComponent.ApplyDamage(targetHealthComponent);
+			DamageComponent.ApplyDamage(targetHealthComponent, InstancedBy);
 			
 			QueueFree();
 		};

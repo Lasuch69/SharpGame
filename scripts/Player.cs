@@ -48,7 +48,7 @@ public sealed partial class Player : CharacterBody2D
 
 	public override void _Input(InputEvent @event)
 	{
-		if (@event.IsAction("shoot"))
+		if (@event is InputEventMouseButton && @event.IsPressed())
 		{
 			Projectile projectile = (Projectile)Projectile.Instantiate();
 			
@@ -58,6 +58,7 @@ public sealed partial class Player : CharacterBody2D
 			projectile.Velocity = this.Position.DirectionTo(mousePosition) * 256.0f;
 			
 			projectile.HitboxComponent.TargetGroup = "Enemy";
+			projectile.InstancedBy = this;
 			
 			GetParent().AddChild(projectile);
 		}

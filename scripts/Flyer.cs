@@ -8,6 +8,9 @@ public partial class Flyer : CharacterBody2D
 	public Node2D Target;
 	
 	[Export]
+	public int ScoreOnKill = 100;
+
+	[Export]
 	public DamageComponent DamageComponent;
 	
 	[Export]
@@ -19,20 +22,33 @@ public partial class Flyer : CharacterBody2D
 	[Export]
 	public NavigationAgent2D NavigationAgent;
 
+	private Game _game;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		NavigationAgent.VelocityComputed += _OnVelocityComputed;
 		NavigationAgent.TargetPosition = Position;
 
-		Game game = GetNode<Game>("/root/Game");
-		Target = game.Player;
-		game.PlayerChanged += (player) => Target = player;
+		_game = GetNode<Game>("/root/Game");
+		Target = _game.Player;
+		_game.PlayerChanged += (player) => Target = player;
 
 		HitboxComponent.TargetEntered += (target) =>
 		{
 			HealthComponent targetHealthComponent = target.GetNode<HealthComponent>("HealthComponent");
-			DamageComponent.ApplyDamage(targetHealthComponent);
+			DamageComponent.ApplyDamage(targetHealthComponent, this);
+		};
+
+		HealthComponent.HealthChanged += (newHealth, oldHealth, instigator) => 
+		{
+			if (newHealth == 0)
+			{
+				if (instigator == _game.Player)
+					_game.Score += ScoreOnKill;
+				
+				QueueFree();
+			}
 		};
 	}
 	

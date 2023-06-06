@@ -4,24 +4,16 @@ using System;
 public partial class DamageComponent : Node
 {
 	[Signal]
-	public delegate void DamagedEventHandler(HealthComponent target, int damage);
+	public delegate void DamagedEventHandler(HealthComponent target, int damage, Node instigator);
 
 	[Export]
-	public int Damage
+	public int Damage = 1;
+
+	public void ApplyDamage(HealthComponent target, Node instigator)
 	{
-		get => _damage;
-		set
-		{
-			_damage = value;
-		}
-	}
+		int health = target.GetHealth();
+		target.SetHealth(health - Damage, instigator);
 
-	private int _damage = 1;
-
-	public void ApplyDamage(HealthComponent target)
-	{
-		target.Health -= _damage;
-
-		EmitSignal(SignalName.Damaged, target, _damage);
+		EmitSignal(SignalName.Damaged, target, Damage, instigator);
 	}
 }
