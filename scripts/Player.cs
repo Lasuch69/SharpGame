@@ -13,12 +13,21 @@ public sealed partial class Player : CharacterBody2D
 	[Export]
 	public PackedScene Projectile;
 
+	[Export]
+	private AnimationPlayer AnimationPlayer;
+
 	public float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
 	public override void _Ready()
 	{
 		Game game = GetNode<Game>("/root/Game");
 		game.Player = this;
+
+		HealthComponent.HealthChanged += (newHealth, oldHealth, instigator) =>
+		{
+			if (newHealth < oldHealth)
+				AnimationPlayer.Play("damaged");
+		};
 	}
 
 	public override void _PhysicsProcess(double delta)
