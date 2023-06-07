@@ -30,17 +30,17 @@ public sealed partial class Player : CharacterBody2D
 			velocity.Y += Gravity * (float)delta;
 
 		// Handle Jump.
-		if (Input.IsActionPressed("ui_accept") && IsOnFloor())
+		if (Input.IsActionPressed("jump") && IsOnFloor())
 			velocity.Y = JumpVelocity;
 
 		// Get the input direction and handle the movement/deceleration.
 		// As good practice, you should replace UI actions with custom gameplay actions.
-		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+		float axis = Input.GetAxis("move_left", "move_right");
 
 		if (IsOnFloor())
-			velocity.X = Mathf.Lerp(velocity.X, direction.X * Speed, Acceleration * (float)delta);
+			velocity.X = Mathf.Lerp(velocity.X, axis * Speed, Acceleration * (float)delta);
 		else
-			velocity.X = Mathf.Lerp(velocity.X, direction.X * Speed, (Acceleration / 5.0f) * (float)delta);
+			velocity.X = Mathf.Lerp(velocity.X, axis * Speed, (Acceleration / 5.0f) * (float)delta);
 
 		Velocity = velocity;
 		MoveAndSlide();
@@ -48,7 +48,7 @@ public sealed partial class Player : CharacterBody2D
 
 	public override void _Input(InputEvent @event)
 	{
-		if (@event is InputEventMouseButton && @event.IsPressed())
+		if (@event.IsActionPressed("shoot"))
 		{
 			Projectile projectile = (Projectile)Projectile.Instantiate();
 			
