@@ -31,9 +31,10 @@ After export just run the game :>
 ## Controls
 
 
-- `Arrows` - Move
+- `A` or `Left` - Move left
+- `D` or `Right` - Move right
 - `Space` - Jump
-- `LMB` or `RMB` - Shoot projectile
+- `LMB` - Shoot
 
 
 ## Credits
