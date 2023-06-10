@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://ccv7t34bk3xvy"]
+[gd_scene load_steps=2 format=3 uid="uid://ccv7t34bk3xvy"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_brloa"]
-[ext_resource type="FontFile" uid="uid://chwgu8slm0oxm" path="res://assets/fonts/6px2bus-font/6Px2bus-draR.ttf" id="1_prwy4"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -26,8 +25,7 @@ theme_override_constants/separation = 16
 
 [node name="Title" type="Label" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_prwy4")
-theme_override_font_sizes/font_size = 18
+theme_type_variation = &"HeaderLarge"
 text = "SharpGame"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
@@ -35,15 +33,11 @@ layout_mode = 2
 
 [node name="PlayButton" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_prwy4")
-theme_override_font_sizes/font_size = 12
 text = "Play"
 flat = true
 
 [node name="ExitButton" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_prwy4")
-theme_override_font_sizes/font_size = 12
 text = "Exit"
 flat = true
 

@@ -36,6 +36,10 @@ window/stretch/aspect="keep_height"
 
 project/assembly_name="SharpGame"
 
+[gui]
+
+theme/custom="res://resources/ui.theme"
+
 [input]
 
 move_left={

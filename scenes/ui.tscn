@@ -1,16 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://0lot5q2epe2c"]
+[gd_scene load_steps=3 format=3 uid="uid://0lot5q2epe2c"]
 
 [ext_resource type="Texture2D" uid="uid://bpgort8t0s0d4" path="res://assets/sprites/heart.tres" id="1_oax7v"]
 [ext_resource type="Script" path="res://scripts/Ui.cs" id="1_txlrb"]
-[ext_resource type="FontFile" uid="uid://chwgu8slm0oxm" path="res://assets/fonts/6px2bus-font/6Px2bus-draR.ttf" id="5_1mxrp"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_v0gp1"]
-font = ExtResource("5_1mxrp")
-font_size = 12
-
-[sub_resource type="LabelSettings" id="LabelSettings_l2c5a"]
-font = ExtResource("5_1mxrp")
-font_size = 12
 
 [node name="UI" type="Control" node_paths=PackedStringArray("TimerLabel", "HeartContainer", "ScoreLabel")]
 layout_mode = 3
@@ -39,7 +30,6 @@ theme_override_constants/margin_top = 16
 [node name="TimerLabel" type="Label" parent="Timer"]
 layout_mode = 2
 text = "00:00"
-label_settings = SubResource("LabelSettings_v0gp1")
 horizontal_alignment = 1
 
 [node name="Health" type="MarginContainer" parent="."]
@@ -86,7 +76,6 @@ theme_override_constants/margin_bottom = 16
 [node name="ScoreLabel" type="Label" parent="Score"]
 layout_mode = 2
 text = "000"
-label_settings = SubResource("LabelSettings_l2c5a")
 horizontal_alignment = 2
 
 [node name="Actions" type="MarginContainer" parent="."]
