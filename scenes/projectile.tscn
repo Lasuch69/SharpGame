@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://bcpbypv8eknf7"]
 
-[ext_resource type="Script" path="res://scripts/HitboxComponent.cs" id="1_3fifd"]
+[ext_resource type="Script" path="res://scripts/components/HitboxComponent.cs" id="1_3fifd"]
 [ext_resource type="Script" path="res://scripts/Projectile.cs" id="1_28v6d"]
-[ext_resource type="Script" path="res://scripts/DamageComponent.cs" id="1_xdfwa"]
+[ext_resource type="Script" path="res://scripts/components/DamageComponent.cs" id="1_xdfwa"]
 [ext_resource type="Script" path="res://scripts/PhysicsInterpolation.cs" id="4_0cdrg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2unfc"]

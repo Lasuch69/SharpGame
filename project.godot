@@ -13,6 +13,8 @@ config_version=5
 config/name="SharpGame"
 run/main_scene="res://startup.tscn"
 config/features=PackedStringArray("4.0", "C#", "Forward Plus")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 
 [audio]
@@ -21,8 +23,8 @@ driver/output_latency=35
 
 [autoload]
 
-Game="*res://scripts/Game.cs"
-Settings="*res://scripts/settings.gd"
+Game="*res://scripts/singletons/Game.cs"
+Settings="*res://scripts/singletons/settings.gd"
 
 [display]
 
