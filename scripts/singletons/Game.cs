@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Game : Node
 {
@@ -8,6 +9,12 @@ public partial class Game : Node
 
 	[Signal]
 	public delegate void ScoreChangedEventHandler(int score);
+
+	[Signal]
+	public delegate void WaveStartedEventHandler(int wave);
+
+	[Signal]
+	public delegate void WaveFinishedEventHandler(int wave);
 
 	public Player Player
 	{
@@ -33,15 +40,21 @@ public partial class Game : Node
 	private Player _player;
 	private int _score;
 
-	private Geometry _geometry;
+	private Geometry _geometry = new ();
+	private Timer _spawnTimer = new ();
+
 	private Level _level;
-	private Timer _spawnTimer;
+	private Vector2[] _verticies;
+	private int[] _indices;
+
+	private PackedScene _enemyScene = (PackedScene)GD.Load("res://scenes/flyer.tscn");
+
+	private int _currentWave = 0;
+	private List<PackedScene> _spawnQueue = new ();
+	private List<CharacterBody2D> _waveEnemies = new ();
 
 	public override void _Ready()
 	{
-		_geometry = new ();
-		_spawnTimer = new ();
-
 		_spawnTimer.WaitTime = 1.0f;
 		_spawnTimer.ProcessCallback = Timer.TimerProcessCallback.Physics;
 
@@ -50,36 +63,66 @@ public partial class Game : Node
 		AddChild(_spawnTimer);
 	}
 
-	private void OnSpawnTimerTimeout()
-	{
-		if (_level == null)
-		{
-			_spawnTimer.Stop();
-			return;
-		}
-
-		if (_level.NavigationMap == null)
-		{
-			_spawnTimer.Stop();
-			return;
-		}
-
-		Vector2[] verticies = _level.NavigationMap.NavigationPolygon.GetOutline(0);
-		int[] indices = Geometry2D.TriangulatePolygon(verticies);
-
-		Vector2 spawnPoint = GetSpawnPoint(verticies, indices, 256.0f);
-		
-		PackedScene enemyScene = (PackedScene)GD.Load("res://scenes/flyer.tscn");
-		Node2D enemy = (Node2D)enemyScene.Instantiate();
-		enemy.Position = spawnPoint;
-		
-		GetTree().CurrentScene.AddChild(enemy);
-	}
-
 	public void SetLevel(Level level)
 	{
 		_level = level;
+		_verticies = _level.NavigationMap.NavigationPolygon.GetOutline(0);
+		_indices = Geometry2D.TriangulatePolygon(_verticies);
+	}
+
+	private void StartWave()
+	{
+		_currentWave++;
+
+		for (int i = 0; i < _currentWave * 2; i++)
+		{
+			_spawnQueue.Add(_enemyScene);
+		}
+
 		_spawnTimer.Start();
+
+		EmitSignal(SignalName.WaveStarted, _currentWave);
+	}
+
+	private void FinishWave()
+	{
+		EmitSignal(SignalName.WaveFinished, _currentWave);
+	}
+
+	private void OnSpawnTimerTimeout()
+	{
+		if (_spawnQueue.Count == 0)
+		{
+			_spawnTimer.Stop();
+			
+			return;
+		}
+
+		int index = _spawnQueue.Count - 1;
+		PackedScene enemyScene = _spawnQueue[index];
+		_spawnQueue.RemoveAt(index);
+
+		CharacterBody2D enemy = (CharacterBody2D)enemyScene.Instantiate();
+		
+		Vector2 spawnPoint = GetSpawnPoint(_verticies, _indices, 256.0f);
+		enemy.Position = spawnPoint;
+		
+		HealthComponent enemyHealth = enemy.GetNode<HealthComponent>("HealthComponent");
+
+		_waveEnemies.Add(enemy);
+		
+		enemyHealth.HealthChanged += (newHealth, oldHealth, instigator) =>
+		{
+			if (newHealth > 0)
+				return;
+
+			_waveEnemies.Remove(enemy);
+
+			if (_waveEnemies.Count == 0 && _spawnQueue.Count == 0)
+				FinishWave();
+		};
+
+		GetTree().CurrentScene.AddChild(enemy);
 	}
 
 	private float CalculateCost(Vector2 point, Vector2 target, float desiredDistance)
@@ -112,7 +155,5 @@ public partial class Game : Node
 		}
 
 		return points[lowestCostIndex];
-	}
-
-	
+	}	
 }
