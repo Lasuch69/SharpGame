@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://csiaty10i3jsm"]
 
-[ext_resource type="Script" path="res://scripts/Level.cs" id="1_5pv7w"]
+[ext_resource type="Script" path="res://scripts/Spawner.cs" id="1_eyrhi"]
 [ext_resource type="TileSet" uid="uid://b8kdro41itmwg" path="res://resources/tile_set.tres" id="1_vh6go"]
 
 [sub_resource type="Gradient" id="Gradient_budhm"]
@@ -17,9 +17,12 @@ vertices = PackedVector2Array(-624, -64, 608, -64, 608, -32, 592, -32, 592, 32, 
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 4, 5, 0), PackedInt32Array(0, 5, 6, 7, 8), PackedInt32Array(7, 9, 10, 11), PackedInt32Array(11, 12, 13), PackedInt32Array(14, 15, 16, 17), PackedInt32Array(17, 16, 18, 19, 20), PackedInt32Array(19, 21, 22, 23), PackedInt32Array(23, 24, 20), PackedInt32Array(20, 25, 17), PackedInt32Array(17, 26, 8), PackedInt32Array(8, 27, 0), PackedInt32Array(17, 8, 7, 13), PackedInt32Array(19, 23, 20), PackedInt32Array(7, 11, 13), PackedInt32Array(17, 13, 14)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(608, -64, 608, -32, 592, -32, 592, 32, 528, 32, 528, 48, 416, 48, 416, 64, 304, 64, 304, 48, 176, 48, 176, 32, 80, 32, 80, 48, 32, 48, 32, 64, -208, 64, -208, 80, -400, 80, -400, 64, -432, 64, -432, 48, -592, 48, -592, -32, -608, -32, -608, -48, -624, -48, -624, -64)])
 
-[node name="Level" type="Node2D" node_paths=PackedStringArray("NavigationMap")]
-script = ExtResource("1_5pv7w")
-NavigationMap = NodePath("NavigationRegion2D")
+[node name="Level" type="Node2D"]
+
+[node name="Spawner" type="Node" parent="." node_paths=PackedStringArray("SpawnRoot", "NavigationMap")]
+script = ExtResource("1_eyrhi")
+SpawnRoot = NodePath("..")
+NavigationMap = NodePath("../NavigationRegion2D")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_vh6go")
