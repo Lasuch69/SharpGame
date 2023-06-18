@@ -34,22 +34,12 @@ public partial class Flyer : CharacterBody2D
 	{
 		_game = GetNode<Game>("/root/Game"); 
 
-		Target = _game.Player;
-	
+		Target = _game.Player;	
 		_game.PlayerChanged += (player) => Target = player;
 
 		HitboxComponent.TargetEntered += (target) => DamageComponent.ApplyDamage(target.GetNode<HealthComponent>("HealthComponent"), this);
 
-		HealthComponent.HealthChanged += (newHealth, oldHealth, instigator) => 
-		{
-			if (newHealth == 0)
-			{
-				if (instigator == _game.Player)
-					_game.Score += ScoreOnKill;
-				
-				QueueFree();
-			}
-		};
+		HealthComponent.HealthEmpty += OnHealthEmpty;
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -82,5 +72,13 @@ public partial class Flyer : CharacterBody2D
 			Velocity = NavigationComponent.GetDirection(Position) * Speed;
 
 		MoveAndSlide();
+	}
+
+	private void OnHealthEmpty(Node instigator)
+	{
+		if (instigator == _game.Player)
+			_game.Score += ScoreOnKill;
+
+		QueueFree();
 	}
 }
