@@ -24,21 +24,9 @@ public partial class Ui : Control
 	{
 		_game = GetNode<Game>("/root/Game");
 		
-		_game.PlayerChanged += (player) =>
-		{
-			if (_playerHealth != null)
-				_playerHealth.HealthChanged -= OnPlayerHealthChanged;
-			
-			if (player == null)
-				return;
-
-			_playerHealth = player.GetNode<HealthComponent>("HealthComponent");
-			
-			_playerHealth.HealthChanged += OnPlayerHealthChanged;
-			
-			SetUiHearts(_playerHealth.GetHealth());
-		};
-
+		SetPlayer(_game.Player);
+		
+		_game.PlayerChanged += OnPlayerChanged;
 		_game.ScoreChanged += OnScoreChanged;
 		
 		_timestamp = Time.GetTicksMsec();
@@ -60,6 +48,21 @@ public partial class Ui : Control
 		};
 
 		return String.Format("{0}:{1}", Format(timeMinutes), Format(timeSeconds % 60));
+	}
+ 
+	private void SetPlayer(Player player)
+	{
+		if (_playerHealth != null)
+			_playerHealth.HealthChanged -= OnPlayerHealthChanged;
+
+		if (player == null)
+			return;
+
+		_playerHealth = player.HealthComponent;
+
+		_playerHealth.HealthChanged += OnPlayerHealthChanged;
+		
+		SetUiHearts(_playerHealth.GetHealth());
 	}
 
 	private void SetUiHearts(int hearts)
@@ -87,12 +90,17 @@ public partial class Ui : Control
 		ScoreLabel.Text = String.Format("{0, 0:D3}", score);
 	}
 
-	public void OnPlayerHealthChanged(int newHealth, int oldHealth, Node instigator)
+	private void OnPlayerChanged(Player player)
+	{
+		SetPlayer(player);
+	}
+
+	private void OnPlayerHealthChanged(int newHealth, int oldHealth, Node instigator)
 	{
 		SetUiHearts(newHealth);
 	}
 
-	public void OnScoreChanged(int score)
+	private void OnScoreChanged(int score)
 	{
 		SetScore(score);
 	}
