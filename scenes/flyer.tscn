@@ -36,7 +36,7 @@ script = ExtResource("2_6x0d2")
 
 [node name="HitboxComponent" type="Area2D" parent="."]
 script = ExtResource("6_6po12")
-TargetGroup = "Player"
+TargetGroups = ["Player"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 shape = SubResource("CircleShape2D_kl1xe")

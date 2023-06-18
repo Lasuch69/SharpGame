@@ -11,17 +11,28 @@ public partial class HitboxComponent : Area2D
 	public delegate void TargetExitedEventHandler(Node2D target);
 
 	[Export]
-	public String TargetGroup;
+	public Godot.Collections.Array<String> TargetGroups = new ();
 
-	public List<Node2D> Targets = new();
+	public List<Node2D> Targets = new ();
 
 	public override void _Ready()
 	{
 		this.BodyEntered += (Node2D body) => 
-		{ 
-			if (!body.IsInGroup(TargetGroup))
+		{
+			bool hasGroup = false;
+
+			foreach (String group in body.GetGroups())
+			{
+				if (TargetGroups.IndexOf(group) == -1)
+					continue;
+
+				hasGroup = true;
+				break;
+			}
+
+			if (!hasGroup)
 				return;
-			
+
 			Targets.Add(body);
 
 			EmitSignal(SignalName.TargetEntered, body); 
@@ -29,10 +40,10 @@ public partial class HitboxComponent : Area2D
 		
 		this.BodyExited += (Node2D body) => 
 		{ 
-			if (!body.IsInGroup(TargetGroup))
+			bool removed = Targets.Remove(body);
+
+			if (!removed)
 				return;
-			
-			Targets.Remove(body);
 
 			EmitSignal(SignalName.TargetExited, body);
 		};

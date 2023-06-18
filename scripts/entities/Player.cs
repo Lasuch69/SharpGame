@@ -66,7 +66,7 @@ public sealed partial class Player : CharacterBody2D
 			projectile.Position = (this.Position.DirectionTo(mousePosition) * 12.0f) + this.Position;
 			projectile.Velocity = this.Position.DirectionTo(mousePosition) * 256.0f;
 			
-			projectile.HitboxComponent.TargetGroup = "Enemy";
+			projectile.HitboxComponent.TargetGroups = new Godot.Collections.Array<String>{ "Enemy" };
 			projectile.InstancedBy = this;
 			
 			GetParent().AddChild(projectile);
