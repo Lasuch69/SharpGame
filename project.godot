@@ -25,6 +25,7 @@ driver/output_latency=35
 
 Game="*res://scripts/singletons/Game.cs"
 Settings="*res://scripts/singletons/settings.gd"
+Navigation="*res://scripts/singletons/Navigation.cs"
 
 [display]
 

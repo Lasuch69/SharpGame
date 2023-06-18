@@ -3,13 +3,12 @@ using System;
 
 public partial class Flyer : CharacterBody2D
 {
-	public const float Speed = 70.0f;
-	
-	public Node2D Target;
-	
+	[Export]
+	public float Speed = 80.0f;
+
 	[Export]
 	public int ScoreOnKill = 100;
-
+	
 	[Export]
 	public DamageComponent DamageComponent;
 	
@@ -18,27 +17,28 @@ public partial class Flyer : CharacterBody2D
 
 	[Export]
 	public HitboxComponent HitboxComponent;
-	
+
 	[Export]
-	public NavigationAgent2D NavigationAgent;
+	public NavigationComponent NavigationComponent;
 
+	public CollisionObject2D Target;
+	
 	private Game _game;
-
+	
+	private PhysicsDirectSpaceState2D _spaceState;
+	
+	private double _time = 0.0;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		NavigationAgent.VelocityComputed += _OnVelocityComputed;
-		NavigationAgent.TargetPosition = Position;
+		_game = GetNode<Game>("/root/Game"); 
 
-		_game = GetNode<Game>("/root/Game");
 		Target = _game.Player;
+	
 		_game.PlayerChanged += (player) => Target = player;
 
-		HitboxComponent.TargetEntered += (target) =>
-		{
-			HealthComponent targetHealthComponent = target.GetNode<HealthComponent>("HealthComponent");
-			DamageComponent.ApplyDamage(targetHealthComponent, this);
-		};
+		HitboxComponent.TargetEntered += (target) => DamageComponent.ApplyDamage(target.GetNode<HealthComponent>("HealthComponent"), this);
 
 		HealthComponent.HealthChanged += (newHealth, oldHealth, instigator) => 
 		{
@@ -54,24 +54,33 @@ public partial class Flyer : CharacterBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		if (Target != null)
-			NavigationAgent.TargetPosition = Target.Position;
+		if (_spaceState == null)
+			_spaceState = PhysicsServer2D.SpaceGetDirectState(GetWorld2D().Space);
 
-		Vector2 pathPosition = NavigationAgent.GetNextPathPosition();
+		_time += delta;
 
-		Vector2 direction = Position.DirectionTo(pathPosition);
-		Vector2 velocity = direction * Speed;
-		
-		if (NavigationAgent.AvoidanceEnabled)
-			NavigationAgent.SetVelocity(velocity);
+		if (_time > 0.25)
+		{
+			_time = 0.0;
+			NavigationComponent.GeneratePath(Position, Target.Position);
+		}
+
+		var parameters = new PhysicsRayQueryParameters2D();
+
+		parameters.From = Position;
+		parameters.To = Target.Position;
+		parameters.Exclude = new Godot.Collections.Array<Rid>{this.GetRid(), Target.GetRid()};
+	
+		var result = _spaceState.IntersectRay(parameters);
+
+		if (result.Count == 0)
+			if (Position.DistanceTo(Target.Position) > 1.0f)
+				Velocity = Position.DirectionTo(Target.Position) * Speed;
+			else
+				Velocity = new ();
 		else
-			Velocity = velocity;
+			Velocity = NavigationComponent.GetDirection(Position) * Speed;
 
 		MoveAndSlide();
-	}
-
-	private void _OnVelocityComputed(Vector2 safeVelocity)
-	{
-		Velocity = safeVelocity;
 	}
 }
