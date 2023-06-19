@@ -19,10 +19,12 @@ public partial class Game : Node
 	public Player Player
 	{
 		get => _player;
-		set 
+		set
 		{
-			_player = value;
+			if (_player == value)
+				return;
 			
+			_player = value;
 			EmitSignal(SignalName.PlayerChanged, _player);
 		}
 	}
@@ -32,42 +34,119 @@ public partial class Game : Node
 		get => _score;
 		set
 		{
-			_score = value;
+			if (_score == value)
+				return;
 			
-			EmitSignal(SignalName.ScoreChanged, _score);
+			_score = value;
+		   	EmitSignal(SignalName.ScoreChanged, _score);
 		}
 	}
 
-	public int Wave
-	{
-		get => _wave;
-		set => GD.PushError("Can't set Wave property.");
+	public Spawner Spawner { 
+		get => _spawner; 
+		set
+		{
+			_spawner = value;
+			
+			if (_spawner != null)
+				StartWave();
+		}
 	}
 
-	public List<PackedScene> SpawnQueue = new ();
-	
-	private Player _player = null;
+	public int Wave { get => _wave; }
+
 	private int _score = 0;
 	private int _wave = 0;
+	
+	private Player _player = null;
+	private Spawner _spawner = null;
+
+	private List<PackedScene> _spawnQueue = new ();
+	private List<Node> _entities = new ();
+
+	private Timer _timer = new ();
 
 	private PackedScene _enemyScene = (PackedScene)GD.Load("res://scenes/flyer.tscn");
 
-	public void StartWave()
+	public override void _Ready()
 	{
-		_wave++;
+		_timer.WaitTime = 2.0f;
+		_timer.ProcessCallback = Timer.TimerProcessCallback.Physics;
+		_timer.Timeout += OnTimerTimeout;
 
-		for (int i = 0; i < _wave * 2; i++)
+		AddChild(_timer);
+	}
+
+	private void OnTimerTimeout()
+	{
+		if (_spawnQueue.Count == 0)
 		{
-			SpawnQueue.Add(_enemyScene);
+			_timer.Stop();
+			return;
 		}
 
+		int idx = _spawnQueue.Count - 1;
+		PackedScene scene = _spawnQueue[idx];
+		_spawnQueue.RemoveAt(idx);
+		
+		Node2D entity = Spawner.Spawn(scene);
+
+		if (entity == null)
+			return;
+		
+		entity.GetNode<HealthComponent>("HealthComponent").HealthEmpty += (instigator) => 
+			OnEntityKilled(entity);
+		
+		_entities.Add(entity);
+	}
+
+	private void OnEntityKilled(Node2D entity)
+	{
+		_entities.Remove(entity);
+
+		if (_spawnQueue.Count != 0 || _entities.Count != 0)
+			return;
+
+		FinishWave();
+		StartWave();
+	}
+
+	private void StartWave()
+	{
+		_wave++;
 		GD.Print("Wave: ", _wave);
+
+		_spawnQueue = GenerateSpawnQueue(_wave);
+
+		_timer.Start();
+
 		EmitSignal(SignalName.WaveStarted, _wave);
 	}
 
-	public void FinishWave()
+	private void FinishWave()
 	{
 		GD.Print("Wave finished!");
 		EmitSignal(SignalName.WaveFinished, _wave);
+	}
+
+	private int GetWaveThreatPoints(int wave)
+	{
+		double value = ((wave - 1) % 5) + (wave / 5) + 1;
+		value *= value;
+
+		return (int)value;
+	}
+	
+	private List<PackedScene> GenerateSpawnQueue(int wave)
+	{
+		int threatPoints = GetWaveThreatPoints(wave);
+		List<PackedScene> queue = new ();
+
+		for (int i = 0; i < threatPoints; i++)
+		{
+			queue.Add(_enemyScene);
+		}
+
+		return queue;
 	}
 }
