@@ -59,8 +59,9 @@ public partial class Flyer : CharacterBody2D
 
 		parameters.From = Position;
 		parameters.To = Target.Position;
-		parameters.Exclude = new Godot.Collections.Array<Rid>{this.GetRid(), Target.GetRid()};
-	
+        parameters.CollisionMask = 0b1;
+		parameters.Exclude = new Godot.Collections.Array<Rid>{Target.GetRid()};
+
 		var result = _spaceState.IntersectRay(parameters);
 
 		if (result.Count == 0)
