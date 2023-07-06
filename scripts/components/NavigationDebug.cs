@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+[GlobalClass]
 public partial class NavigationDebug : Node2D
 {
 	private NavigationComponent _navigationComponent;

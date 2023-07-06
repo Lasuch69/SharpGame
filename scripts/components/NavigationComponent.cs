@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+[GlobalClass]
 public partial class NavigationComponent : Node
 {
 	public Godot.Collections.Array<Vector2> Path { get => _path; }

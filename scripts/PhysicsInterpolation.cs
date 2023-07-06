@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+[GlobalClass]
 public partial class PhysicsInterpolation : Node2D
 {
 	private CharacterBody2D _parent;

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+[GlobalClass]
 public sealed partial class Player : CharacterBody2D
 {
 	public const float Speed = 150.0f;
