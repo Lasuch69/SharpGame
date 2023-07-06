@@ -16,10 +16,10 @@ While creating first scripts I've stumbled upon many minor roadblocks but that w
 This project doesn't contain any external dependencies so export process is exactly the same like for any other project made in Godot.
 
 
-To export this project you need to install Godot https://github.com/godotengine/godot/releases/tag/4.0.3-stable
+To export this project you need to install Godot https://github.com/godotengine/godot/releases/download/4.1-stable/Godot_v4.1-stable_mono_linux_x86_64.zip
 
 
-After installation follow the docs https://docs.godotengine.org/en/4.0/tutorials/export/exporting_projects.html
+After installation follow the docs https://docs.godotengine.org/en/4.1/tutorials/export/exporting_projects.html
 
 
 ## Usage
