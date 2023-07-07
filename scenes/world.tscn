@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bdiobw2ao84e3" path="res://scenes/player.tscn" id="2_26r7e"]
 [ext_resource type="PackedScene" uid="uid://csiaty10i3jsm" path="res://scenes/level.tscn" id="4_0di3k"]
 
-[node name="World" type="Node2D"]
+[node name="World" type="Node"]
 
 [node name="Level" parent="." instance=ExtResource("4_0di3k")]
 
