@@ -13,7 +13,8 @@ public partial class Navigation : Node
 
 	private Vector2I GetId(Vector2 position)
 	{
-		return (Vector2I)((position - _aStar.CellSize / 2) / _aStar.CellSize).Round();
+		Vector2I cell = (Vector2I)((position - _aStar.Offset) / _aStar.CellSize).Round();
+		return cell.Clamp(_aStar.Region.Position, _aStar.Region.End);
 	}
 
 	public Godot.Collections.Array<Vector2> GetPath(Vector2 from, Vector2 to)
