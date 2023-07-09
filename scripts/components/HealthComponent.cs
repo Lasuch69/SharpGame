@@ -5,10 +5,10 @@ using System;
 public partial class HealthComponent : Node
 {
 	[Signal]
-	public delegate void HealthChangedEventHandler(int newhealth, int oldHealth, Node instigator);
+	public delegate void HealthChangedEventHandler(int newhealth, int oldHealth);
 
 	[Signal]
-	public delegate void HealthEmptyEventHandler(Node instigator);
+	public delegate void HealthEmptyEventHandler();
 
 	[Export]
 	private int _maxHealth = 1;
@@ -16,7 +16,7 @@ public partial class HealthComponent : Node
 	[Export]
 	private int _health = 1;
 
-	public void SetHealth(int health, Node instigator)
+	public void SetHealth(int health)
 	{
 		int oldHealth = _health;
 		
@@ -26,9 +26,9 @@ public partial class HealthComponent : Node
 			return;
 
 		if (_health == 0)
-			EmitSignal(SignalName.HealthEmpty, instigator);
+			EmitSignal(SignalName.HealthEmpty);
 
-		EmitSignal(SignalName.HealthChanged, _health, oldHealth, instigator);
+		EmitSignal(SignalName.HealthChanged, _health, oldHealth);
 	}
 
 	public int GetHealth()

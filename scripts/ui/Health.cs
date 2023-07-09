@@ -18,7 +18,7 @@ public partial class Health : GridContainer
 		_game.PlayerChanged += (player) => SetPlayer(player);
 	}
  
-	private void OnPlayerHealthChanged(int newHealth, int oldHealth, Node instigator)
+	private void OnPlayerHealthChanged(int newHealth, int oldHealth)
 	{
 		SetUiHearts(newHealth);
 	}

@@ -35,10 +35,10 @@ public partial class Flyer : CharacterBody2D
 	{
 		_game = GetNode<Game>("/root/Game"); 
 
-		Target = _game.Player;	
+		Target = _game.Player;
 		_game.PlayerChanged += (player) => Target = player;
 
-		HitboxComponent.TargetEntered += (target) => DamageComponent.ApplyDamage(target.GetNode<HealthComponent>("HealthComponent"), this);
+		HitboxComponent.TargetEntered += (target) => DamageComponent.ApplyDamage(target.GetNode<HealthComponent>("HealthComponent"));
 
 		HealthComponent.HealthEmpty += OnHealthEmpty;
 	}
@@ -76,11 +76,9 @@ public partial class Flyer : CharacterBody2D
 		MoveAndSlide();
 	}
 
-	private void OnHealthEmpty(Node instigator)
+	private void OnHealthEmpty()
 	{
-		if (instigator == _game.Player)
-			_game.Score += ScoreOnKill;
-
+		_game.Score += ScoreOnKill;
 		QueueFree();
 	}
 }

@@ -24,7 +24,7 @@ public sealed partial class Player : CharacterBody2D
 		Game game = GetNode<Game>("/root/Game");
 		game.Player = this;
 
-		HealthComponent.HealthChanged += (newHealth, oldHealth, instigator) =>
+		HealthComponent.HealthChanged += (newHealth, oldHealth) =>
 		{
 			if (newHealth < oldHealth)
 				AnimationPlayer.Play("damaged");
@@ -68,7 +68,6 @@ public sealed partial class Player : CharacterBody2D
 			projectile.Velocity = this.Position.DirectionTo(mousePosition) * 256.0f;
 			
 			projectile.HitboxComponent.TargetGroups = new Godot.Collections.Array<String>{ "Enemy" };
-			projectile.InstancedBy = this;
 			
 			GetParent().AddChild(projectile);
 		}

@@ -5,16 +5,16 @@ using System;
 public partial class DamageComponent : Node
 {
 	[Signal]
-	public delegate void DamagedEventHandler(HealthComponent target, int damage, Node instigator);
+	public delegate void DamagedEventHandler(HealthComponent target, int damage);
 
 	[Export]
 	public int Damage = 1;
 
-	public void ApplyDamage(HealthComponent target, Node instigator)
+	public void ApplyDamage(HealthComponent target)
 	{
 		int health = target.GetHealth();
-		target.SetHealth(health - Damage, instigator);
+		target.SetHealth(health - Damage);
 
-		EmitSignal(SignalName.Damaged, target, Damage, instigator);
+		EmitSignal(SignalName.Damaged, target, Damage);
 	}
 }
