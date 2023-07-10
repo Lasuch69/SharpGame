@@ -1,149 +1,82 @@
 using Godot;
 using System;
 
-public partial class Spawner : Node
+public partial class Spawner : Node2D
 {
-	private Game _game;
-	private Godot.Collections.Array<Marker2D> _markers = new ();
-	
-	public int Wave { get => _wave; }
-
-	private int _score = 0;
-	private int _wave = 0;
-	
+	[Export]
 	private Player _player = null;
 
-	private Godot.Collections.Array<PackedScene> _spawnQueue = new ();
-	private Godot.Collections.Array<Node> _entities = new ();
+	[Export]
+	private Timer _timer = null;
 
-	private Timer _timer = new ();
-
+	private PhysicsDirectSpaceState2D _spaceState = null;
 	private PackedScene _enemyScene = (PackedScene)GD.Load("res://scenes/flyer.tscn");
-
+	
+	private Random _random = new ();
+	
 	public override void _Ready()
 	{
-		_game = GetNode<Game>("/root/Game");
-		
-		foreach (Node node in GetChildren())
-		{
-			if (!node.IsClass("Marker2D"))
-				continue;
-
-			_markers.Add((Marker2D)node);
-		}
-		
-		_timer.WaitTime = 2.0f;
-		_timer.ProcessCallback = Timer.TimerProcessCallback.Physics;
-		_timer.Timeout += OnTimerTimeout;
-
-		AddChild(_timer);
-
-		StartWave();
+		_timer.Timeout += () => Spawn(_enemyScene);
+		_timer.Start();
 	}
 
-	private void OnTimerTimeout()
+	public override void _PhysicsProcess(double delta)
 	{
-		if (_spawnQueue.Count == 0)
-		{
-			_timer.Stop();
-			return;
-		}
-
-		int idx = _spawnQueue.Count - 1;
-		PackedScene scene = _spawnQueue[idx];
-		_spawnQueue.RemoveAt(idx);
-		
-		Node2D entity = Spawn(scene);
-
-		if (entity == null)
-			return;
-		
-		entity.GetNode<HealthComponent>("HealthComponent").HealthEmpty += (instigator) => 
-			OnEntityKilled(entity);
-		
-		_entities.Add(entity);
+		if (_spaceState == null)
+			_spaceState = PhysicsServer2D.SpaceGetDirectState(GetWorld2D().Space);
 	}
 
-	public Node2D Spawn(PackedScene scene)
+	private Node2D Spawn(PackedScene scene)
 	{
-		if (_game.Player == null)
+		Node instance = scene.Instantiate();
+
+		if (!instance.IsClass("Node2D"))
 			return null;
 
-		Vector2 targetPosition = _game.Player.Position;
-		
-		float[] costs = new float[_markers.Count];
+		if (_player == null)
+			return null;
 
-		for (int i = 0; i < _markers.Count; i++)
+		Vector2 position = Vector2.Zero;
+
+		int i = 0;
+
+		while (i < 32)
 		{
-			costs[i] = CalculateCost(_markers[i].Position, targetPosition);
-		}
+			Vector2 point = GetRandomPoint(128.0f) + _player.Position;
 
-		int idx = 0;
+			PhysicsRayQueryParameters2D parameters = new ();
+			
+			parameters.From = _player.Position;
+			parameters.To = point;
+			parameters.Exclude.Add(_player.GetRid());
 
-		for (int i = 0; i < costs.Length; i++)
-		{
-			if (costs[i] > costs[idx])
-				continue;
+			if (_spaceState.IntersectRay(parameters).Count == 0)
+			{
+				position = point;
+				break;
+			}
 
-			idx = i;
+			i++;
 		}
 		
-		Node2D entity = (Node2D)scene.Instantiate();
-		entity.Position = _markers[idx].Position;
-		GetTree().CurrentScene.AddChild(entity);
+		Node2D entity = (Node2D)instance;
+
+		entity.Position = position;
+
+		GetParent().AddChild(entity);
 
 		return entity;
 	}
 
-	private void OnEntityKilled(Node2D entity)
+	private Vector2 GetRandomPoint(float desiredDistance)
 	{
-		_entities.Remove(entity);
+		float a = _random.NextSingle() * 2 * MathF.PI;
 
-		if (_spawnQueue.Count != 0 || _entities.Count != 0)
-			return;
+		float i = _random.NextSingle() * 0.25f;
+		i -= i / 2.0f;
 
-		FinishWave();
-		StartWave();
-	}
+		float r = desiredDistance * (1.0f + i);
 
-	private void StartWave()
-	{
-		_wave++;
-		GD.Print("Wave: ", _wave);
-
-		_spawnQueue = GenerateSpawnQueue(_wave);
-
-		_timer.Start();
-	}
-
-	private void FinishWave()
-	{
-		GD.Print("Wave finished!");
-	}
-
-	private int GetWaveThreatPoints(int wave)
-	{
-		double value = ((wave - 1) % 5) + (wave / 5) + 1;
-		value *= value;
-
-		return (int)value;
-	}
-	
-	private Godot.Collections.Array<PackedScene> GenerateSpawnQueue(int wave)
-	{
-		int threatPoints = GetWaveThreatPoints(wave);
-		Godot.Collections.Array<PackedScene> queue = new ();
-
-		for (int i = 0; i < threatPoints; i++)
-		{
-			queue.Add(_enemyScene);
-		}
-
-		return queue;
-	}
-
-	private float CalculateCost(Vector2 from, Vector2 to, float desiredDistance = 128.0f)
-	{
-		return Mathf.Abs(from.DistanceTo(to) - desiredDistance);
+		return new Vector2(r * MathF.Cos(a), r * MathF.Sin(a));
 	}
 }
