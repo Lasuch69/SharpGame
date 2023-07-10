@@ -35,16 +35,12 @@ public sealed partial class Player : CharacterBody2D
 	{
 		Vector2 velocity = Velocity;
 
-		// Add the gravity.
 		if (!IsOnFloor())
 			velocity.Y += Gravity * (float)delta;
 
-		// Handle Jump.
 		if (Input.IsActionPressed("jump") && IsOnFloor())
 			velocity.Y = JumpVelocity;
 
-		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
 		float axis = Input.GetAxis("move_left", "move_right");
 
 		if (IsOnFloor())
@@ -61,14 +57,14 @@ public sealed partial class Player : CharacterBody2D
 		if (@event.IsActionPressed("shoot"))
 		{
 			Projectile projectile = (Projectile)Projectile.Instantiate();
-			
+
 			Vector2 mousePosition = GetGlobalMousePosition();
-			
+
 			projectile.Position = (this.Position.DirectionTo(mousePosition) * 12.0f) + this.Position;
 			projectile.Velocity = this.Position.DirectionTo(mousePosition) * 256.0f;
-			
-			projectile.HitboxComponent.TargetGroups = new Godot.Collections.Array<String>{ "Enemy" };
-			
+
+			projectile.HitboxComponent.TargetGroups.Add("Enemy");
+
 			GetParent().AddChild(projectile);
 		}
 	}
