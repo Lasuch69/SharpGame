@@ -20,10 +20,10 @@ public partial class Navigation : Node
 	public Godot.Collections.Array<Vector2> GetPath(Vector2 from, Vector2 to)
 	{
 		Godot.Collections.Array<Vector2> path = new ();
-		
-		foreach (Vector2 point in _aStar.GetPointPath(GetId(from), GetId(to)))
+
+		foreach (Vector2I cell in _aStar.GetIdPath(GetId(from), GetId(to)))
 		{
-			path.Add(point);
+			path.Add(_aStar.GetPointPosition(cell));
 		}
 
 		return path;
