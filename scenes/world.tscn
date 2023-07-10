@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://dofcij4c3wdjp"]
+[gd_scene load_steps=6 format=3 uid="uid://dofcij4c3wdjp"]
 
 [ext_resource type="PackedScene" uid="uid://0lot5q2epe2c" path="res://scenes/ui.tscn" id="1_kt0al"]
+[ext_resource type="Script" path="res://scripts/World.cs" id="1_v6hlk"]
 [ext_resource type="PackedScene" uid="uid://bdiobw2ao84e3" path="res://scenes/player.tscn" id="2_26r7e"]
 [ext_resource type="Script" path="res://scripts/Spawner.cs" id="2_lvh7q"]
 [ext_resource type="PackedScene" uid="uid://csiaty10i3jsm" path="res://scenes/level.tscn" id="4_0di3k"]
 
-[node name="World" type="Node"]
+[node name="World" type="Node" node_paths=PackedStringArray("_spawner")]
+script = ExtResource("1_v6hlk")
+_spawner = NodePath("Spawner")
 
 [node name="Spawner" type="Node2D" parent="." node_paths=PackedStringArray("_player", "_timer")]
 script = ExtResource("2_lvh7q")
