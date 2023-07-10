@@ -22,6 +22,9 @@ public partial class Flyer : CharacterBody2D
 	[Export]
 	public NavigationComponent NavigationComponent;
 
+	[Export]
+	private PackedScene _deathVfx = null;
+
 	public CollisionObject2D Target;
 	
 	private Game _game;
@@ -79,6 +82,15 @@ public partial class Flyer : CharacterBody2D
 	private void OnHealthEmpty()
 	{
 		_game.Score += ScoreOnKill;
+
+		if (_deathVfx != null)
+		{
+			Node2D instance = (Node2D)_deathVfx.Instantiate();
+			instance.Position = Position;
+
+			GetParent().AddChild(instance);
+		}
+
 		QueueFree();
 	}
 }

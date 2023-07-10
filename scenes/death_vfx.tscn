@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://cyrld2bj2no50"]
+
+[ext_resource type="Script" path="res://scripts/death_vfx.gd" id="1_gha55"]
+
+[sub_resource type="Gradient" id="Gradient_pv2mf"]
+offsets = PackedFloat32Array(0.755556, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hn33l"]
+gradient = SubResource("Gradient_pv2mf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lnxgn"]
+particle_flag_disable_z = true
+spread = 180.0
+flatness = 1.0
+gravity = Vector3(0, 490, 0)
+initial_velocity_min = 125.0
+initial_velocity_max = 250.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 2.0
+scale_max = 2.0
+color_ramp = SubResource("GradientTexture1D_hn33l")
+collision_mode = 1
+collision_friction = 0.5
+collision_bounce = 0.5
+
+[sub_resource type="Animation" id="Animation_4lg4s"]
+resource_name = "animation"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ocl3l"]
+_data = {
+"animation": SubResource("Animation_4lg4s")
+}
+
+[node name="DeathVfx" type="Node2D"]
+script = ExtResource("1_gha55")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_lnxgn")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+visibility_rect = Rect2(-300, -300, 600, 600)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "animation"
+libraries = {
+"": SubResource("AnimationLibrary_ocl3l")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
