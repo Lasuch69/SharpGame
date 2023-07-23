@@ -90,11 +90,12 @@ public partial class Spawner : Node2D
 		{
 			Vector2 point = GetRandomPoint(128.0f) + _player.Position;
 
-			PhysicsRayQueryParameters2D parameters = new ();
-			
-			parameters.From = _player.Position;
-			parameters.To = point;
-			parameters.Exclude.Add(_player.GetRid());
+            PhysicsRayQueryParameters2D parameters = new()
+            {
+                From = _player.Position,
+                To = point
+            };
+            parameters.Exclude.Add(_player.GetRid());
 
 			if (_spaceState.IntersectRay(parameters).Count == 0)
 			{
