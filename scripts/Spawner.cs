@@ -23,8 +23,7 @@ public partial class Spawner : Node2D
 
     public override void _PhysicsProcess(double delta)
 	{
-		if (_spaceState == null)
-			_spaceState = PhysicsServer2D.SpaceGetDirectState(GetWorld2D().Space);
+		_spaceState ??= PhysicsServer2D.SpaceGetDirectState(GetWorld2D().Space);
 	}
 
 	private void OnTimerTimeout()

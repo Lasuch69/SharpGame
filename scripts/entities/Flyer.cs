@@ -48,8 +48,7 @@ public partial class Flyer : CharacterBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		if (_spaceState == null)
-			_spaceState = PhysicsServer2D.SpaceGetDirectState(GetWorld2D().Space);
+		_spaceState ??= PhysicsServer2D.SpaceGetDirectState(GetWorld2D().Space);
 
 		_time += delta;
 
