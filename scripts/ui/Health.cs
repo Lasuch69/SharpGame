@@ -46,12 +46,12 @@ public partial class Health : GridContainer
 
 		for (int i = 0; hearts > i; i++)
 		{
-			TextureRect texture = new TextureRect();
-			
-			texture.StretchMode = TextureRect.StretchModeEnum.KeepAspect; 
-			texture.Texture = HeartTexture;
+            var texture = new TextureRect {
+                StretchMode = TextureRect.StretchModeEnum.KeepAspect,
+                Texture = HeartTexture
+            };
 
-			AddChild(texture);
+            AddChild(texture);
 		}
 	}
 }
