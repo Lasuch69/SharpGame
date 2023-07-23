@@ -31,8 +31,5 @@ public partial class HealthComponent : Node
 		EmitSignal(SignalName.HealthChanged, _health, oldHealth);
 	}
 
-	public int GetHealth()
-	{
-		return _health;
-	}
+    public int GetHealth() => _health;
 }

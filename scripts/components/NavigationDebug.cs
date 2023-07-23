@@ -6,12 +6,9 @@ public partial class NavigationDebug : Node2D
 {
 	private NavigationComponent _navigationComponent;
 
-	public override void _Ready()
-	{
-		_navigationComponent = GetParent<NavigationComponent>();
-	}
+    public override void _Ready() => _navigationComponent = GetParent<NavigationComponent>();
 
-	public override void _Draw()
+    public override void _Draw()
 	{
 		var path = _navigationComponent.Path;
 
@@ -24,8 +21,5 @@ public partial class NavigationDebug : Node2D
 		}
 	}
 
-	public override void _Process(double delta)
-	{
-		QueueRedraw();
-	}
+    public override void _Process(double delta) => QueueRedraw();
 }

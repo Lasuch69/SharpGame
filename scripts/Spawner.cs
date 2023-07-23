@@ -18,13 +18,10 @@ public partial class Spawner : Node2D
 
 	private Godot.Collections.Array<PackedScene> _queue = new ();
 	private Godot.Collections.Array<Node2D> _entities = new ();
-	
-	public override void _Ready()
-	{
-		_timer.Timeout += OnTimerTimeout;
-	}
 
-	public override void _PhysicsProcess(double delta)
+    public override void _Ready() => _timer.Timeout += OnTimerTimeout;
+
+    public override void _PhysicsProcess(double delta)
 	{
 		if (_spaceState == null)
 			_spaceState = PhysicsServer2D.SpaceGetDirectState(GetWorld2D().Space);
