@@ -18,16 +18,12 @@ public partial class Spawner : Node2D
 
 	private Godot.Collections.Array<PackedScene> _queue = new ();
 	private Godot.Collections.Array<Node2D> _entities = new ();
-	
-	public override void _Ready()
-	{
-		_timer.Timeout += OnTimerTimeout;
-	}
 
-	public override void _PhysicsProcess(double delta)
+    public override void _Ready() => _timer.Timeout += OnTimerTimeout;
+
+    public override void _PhysicsProcess(double delta)
 	{
-		if (_spaceState == null)
-			_spaceState = PhysicsServer2D.SpaceGetDirectState(GetWorld2D().Space);
+		_spaceState ??= PhysicsServer2D.SpaceGetDirectState(GetWorld2D().Space);
 	}
 
 	private void OnTimerTimeout()
@@ -94,11 +90,12 @@ public partial class Spawner : Node2D
 		{
 			Vector2 point = GetRandomPoint(128.0f) + _player.Position;
 
-			PhysicsRayQueryParameters2D parameters = new ();
-			
-			parameters.From = _player.Position;
-			parameters.To = point;
-			parameters.Exclude.Add(_player.GetRid());
+            PhysicsRayQueryParameters2D parameters = new()
+            {
+                From = _player.Position,
+                To = point
+            };
+            parameters.Exclude.Add(_player.GetRid());
 
 			if (_spaceState.IntersectRay(parameters).Count == 0)
 			{

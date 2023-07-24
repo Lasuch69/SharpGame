@@ -29,12 +29,9 @@ public partial class Navigation : Node
 		return path;
 	}
 
-	public Godot.Collections.Array<Vector2I> GetIdPath(Vector2I fromId, Vector2I toId)
-	{
-		return _aStar.GetIdPath(fromId, toId);
-	}
+    public Godot.Collections.Array<Vector2I> GetIdPath(Vector2I fromId, Vector2I toId) => _aStar.GetIdPath(fromId, toId);
 
-	public void SetTileMap(TileMap tileMap)
+    public void SetTileMap(TileMap tileMap)
 	{
 		Vector2 cellSize = new (tileMap.CellQuadrantSize, tileMap.CellQuadrantSize);
 

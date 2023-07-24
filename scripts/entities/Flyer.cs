@@ -48,8 +48,7 @@ public partial class Flyer : CharacterBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		if (_spaceState == null)
-			_spaceState = PhysicsServer2D.SpaceGetDirectState(GetWorld2D().Space);
+		_spaceState ??= PhysicsServer2D.SpaceGetDirectState(GetWorld2D().Space);
 
 		_time += delta;
 
@@ -59,14 +58,15 @@ public partial class Flyer : CharacterBody2D
 			NavigationComponent.GeneratePath(Position, Target.Position);
 		}
 
-		var parameters = new PhysicsRayQueryParameters2D();
+        var parameters = new PhysicsRayQueryParameters2D
+        {
+            From = Position,
+            To = Target.Position,
+            CollisionMask = 0b1,
+            Exclude = new Godot.Collections.Array<Rid> { Target.GetRid() }
+        };
 
-		parameters.From = Position;
-		parameters.To = Target.Position;
-		parameters.CollisionMask = 0b1;
-		parameters.Exclude = new Godot.Collections.Array<Rid>{Target.GetRid()};
-
-		var result = _spaceState.IntersectRay(parameters);
+        var result = _spaceState.IntersectRay(parameters);
 
 		if (result.Count == 0)
 			if (Position.DistanceTo(Target.Position) > 1.0f)
