@@ -1,6 +1,9 @@
 # SharpGame
 
 
+![Gameplay Screenshot](/screenshot.png?raw=true "SharpGame")
+
+
 ## Description
 
 This game is a platformer arena where your goal is to survive for as long as possible either with friends or solo.
