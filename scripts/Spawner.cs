@@ -3,92 +3,92 @@ using System;
 
 public partial class Spawner : Node2D
 {
-	[Signal]
-	public delegate void WaveFinishedEventHandler();
+    [Signal]
+    public delegate void WaveFinishedEventHandler();
 
-	[Export]
-	private Player _player = null;
+    [Export]
+    private Player _player = null;
 
-	[Export]
-	private Timer _timer = null;
+    [Export]
+    private Timer _timer = null;
 
-	private PhysicsDirectSpaceState2D _spaceState = null;
-	private PackedScene _enemyScene = (PackedScene)GD.Load("res://scenes/flyer.tscn");
-	private Random _random = new ();
+    private PhysicsDirectSpaceState2D _spaceState = null;
+    private PackedScene _enemyScene = (PackedScene)GD.Load("res://scenes/flyer.tscn");
+    private Random _random = new();
 
-	private Godot.Collections.Array<PackedScene> _queue = new ();
-	private Godot.Collections.Array<Node2D> _entities = new ();
+    private Godot.Collections.Array<PackedScene> _queue = new();
+    private Godot.Collections.Array<Node2D> _entities = new();
 
     public override void _Ready() => _timer.Timeout += OnTimerTimeout;
 
     public override void _PhysicsProcess(double delta)
-	{
-		_spaceState ??= PhysicsServer2D.SpaceGetDirectState(GetWorld2D().Space);
-	}
+    {
+        _spaceState ??= PhysicsServer2D.SpaceGetDirectState(GetWorld2D().Space);
+    }
 
-	private void OnTimerTimeout()
-	{
-		if (_queue.Count == 0)
-		{
-			_timer.Stop();
-			return;
-		}
+    private void OnTimerTimeout()
+    {
+        if (_queue.Count == 0)
+        {
+            _timer.Stop();
+            return;
+        }
 
-		int last = _queue.Count - 1;
-		PackedScene scene = _queue[last];
-		_queue.RemoveAt(last);
+        int last = _queue.Count - 1;
+        PackedScene scene = _queue[last];
+        _queue.RemoveAt(last);
 
-		Node2D entity = Spawn(scene);
-		_entities.Add(entity);
+        Node2D entity = Spawn(scene);
+        _entities.Add(entity);
 
-		entity.TreeExiting += () =>
-		{
-			_entities.Remove(entity);
+        entity.TreeExiting += () =>
+        {
+            _entities.Remove(entity);
 
-			if (_entities.Count == 0 && _queue.Count == 0)
-				EmitSignal(SignalName.WaveFinished);
-		};
-	}
+            if (_entities.Count == 0 && _queue.Count == 0)
+                EmitSignal(SignalName.WaveFinished);
+        };
+    }
 
-	public void StartWave(int wave)
-	{
-		int points = Mathf.Clamp(wave, 1, int.MaxValue);
+    public void StartWave(int wave)
+    {
+        int points = Mathf.Clamp(wave, 1, int.MaxValue);
 
-		_queue.Resize(points);
-		_queue.Fill(_enemyScene);
-		
-		_timer.Start();
-	}
+        _queue.Resize(points);
+        _queue.Fill(_enemyScene);
 
-	private Vector2 GetRandomPoint(float desiredDistance)
-	{
-		float a = _random.NextSingle() * 2 * MathF.PI;
+        _timer.Start();
+    }
 
-		float i = _random.NextSingle() * 0.25f;
-		i -= i / 2.0f;
+    private Vector2 GetRandomPoint(float desiredDistance)
+    {
+        float a = _random.NextSingle() * 2 * MathF.PI;
 
-		float r = desiredDistance * (1.0f + i);
+        float i = _random.NextSingle() * 0.25f;
+        i -= i / 2.0f;
 
-		return new Vector2(r * MathF.Cos(a), r * MathF.Sin(a));
-	}
+        float r = desiredDistance * (1.0f + i);
 
-	private Node2D Spawn(PackedScene scene)
-	{
-		Node instance = scene.Instantiate();
+        return new Vector2(r * MathF.Cos(a), r * MathF.Sin(a));
+    }
 
-		if (!instance.IsClass("Node2D"))
-			return null;
+    private Node2D Spawn(PackedScene scene)
+    {
+        Node instance = scene.Instantiate();
 
-		if (_player == null)
-			return null;
+        if (!instance.IsClass("Node2D"))
+            return null;
 
-		Vector2 position = Vector2.Zero;
+        if (_player == null)
+            return null;
 
-		int i = 0;
+        Vector2 position = Vector2.Zero;
 
-		while (i < 32)
-		{
-			Vector2 point = GetRandomPoint(128.0f) + _player.Position;
+        int i = 0;
+
+        while (i < 32)
+        {
+            Vector2 point = GetRandomPoint(128.0f) + _player.Position;
 
             PhysicsRayQueryParameters2D parameters = new()
             {
@@ -97,21 +97,21 @@ public partial class Spawner : Node2D
             };
             parameters.Exclude.Add(_player.GetRid());
 
-			if (_spaceState.IntersectRay(parameters).Count == 0)
-			{
-				position = point;
-				break;
-			}
+            if (_spaceState.IntersectRay(parameters).Count == 0)
+            {
+                position = point;
+                break;
+            }
 
-			i++;
-		}
-		
-		Node2D entity = (Node2D)instance;
+            i++;
+        }
 
-		entity.Position = position;
+        Node2D entity = (Node2D)instance;
 
-		GetParent().AddChild(entity);
+        entity.Position = position;
 
-		return entity;
-	}
+        GetParent().AddChild(entity);
+
+        return entity;
+    }
 }

@@ -3,55 +3,56 @@ using System;
 
 public partial class Health : GridContainer
 {
-	[Export]
-	public Texture2D HeartTexture;
+    [Export]
+    public Texture2D HeartTexture;
 
-	private HealthComponent _playerHealth;	
-	private Game _game;
+    private HealthComponent _playerHealth;
+    private Game _game;
 
-	public override void _Ready()
-	{
-		_game = GetNode<Game>("/root/Game");
-		
-		SetPlayer(_game.Player);
+    public override void _Ready()
+    {
+        _game = GetNode<Game>("/root/Game");
 
-		_game.PlayerChanged += (player) => SetPlayer(player);
-	}
+        SetPlayer(_game.Player);
+
+        _game.PlayerChanged += (player) => SetPlayer(player);
+    }
 
     private void OnPlayerHealthChanged(int newHealth, int oldHealth) => SetUiHearts(newHealth);
 
     private void SetPlayer(Player player)
-	{
-		if (_playerHealth != null)
-			_playerHealth.HealthChanged -= OnPlayerHealthChanged;
+    {
+        if (_playerHealth != null)
+            _playerHealth.HealthChanged -= OnPlayerHealthChanged;
 
-		if (player == null)
-			return;
+        if (player == null)
+            return;
 
-		_playerHealth = player.HealthComponent;
+        _playerHealth = player.HealthComponent;
 
-		_playerHealth.HealthChanged += OnPlayerHealthChanged;
-		
-		SetUiHearts(_playerHealth.GetHealth());
-	}
+        _playerHealth.HealthChanged += OnPlayerHealthChanged;
 
-	private void SetUiHearts(int hearts)
-	{
-		var children = GetChildren();
+        SetUiHearts(_playerHealth.GetHealth());
+    }
 
-		foreach (Node child in children)
-		{
-			RemoveChild(child);
-		}
+    private void SetUiHearts(int hearts)
+    {
+        var children = GetChildren();
 
-		for (int i = 0; hearts > i; i++)
-		{
-            var texture = new TextureRect {
+        foreach (Node child in children)
+        {
+            RemoveChild(child);
+        }
+
+        for (int i = 0; hearts > i; i++)
+        {
+            var texture = new TextureRect
+            {
                 StretchMode = TextureRect.StretchModeEnum.KeepAspect,
                 Texture = HeartTexture
             };
 
             AddChild(texture);
-		}
-	}
+        }
+    }
 }
