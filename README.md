@@ -16,19 +16,10 @@ While creating first scripts I've stumbled upon many minor roadblocks but that w
 This project doesn't contain any external dependencies so export process is exactly the same like for any other project made in Godot.
 
 
-To export this project you need to install Godot https://github.com/godotengine/godot/releases/download/4.1-stable/Godot_v4.1-stable_mono_linux_x86_64.zip
-
-
-After installation follow the docs https://docs.godotengine.org/en/4.1/tutorials/export/exporting_projects.html
-
-
 ## Usage
 
 
-After export just run the game :>
-
-
-## Controls
+### Controls
 
 
 - `A` or `Left` - Move left
@@ -40,7 +31,16 @@ After export just run the game :>
 ## Credits
 
 
-Assets used https://kenney.nl/assets
+### Assets
+
+
+[1 Bit Platformer Pack](https://kenney.nl/assets/1-bit-platformer-pack) from Kenney
+
+
+## Contributing
+
+
+Before opening a pull request please format your code with [CSharpier](https://csharpier.com/).
 
 
 ## License
