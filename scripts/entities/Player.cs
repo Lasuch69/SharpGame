@@ -4,10 +4,6 @@ using System;
 [GlobalClass]
 public sealed partial class Player : CharacterBody2D
 {
-    public const float Speed = 150.0f;
-    public const float Acceleration = 16.0f;
-    public const float JumpVelocity = -150.0f;
-
     [Export]
     public HealthComponent HealthComponent;
 
@@ -16,8 +12,6 @@ public sealed partial class Player : CharacterBody2D
 
     [Export]
     private AnimationPlayer AnimationPlayer;
-
-    public float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
     public override void _Ready()
     {
@@ -29,27 +23,6 @@ public sealed partial class Player : CharacterBody2D
             if (newHealth < oldHealth)
                 AnimationPlayer.Play("damaged");
         };
-    }
-
-    public override void _PhysicsProcess(double delta)
-    {
-        Vector2 velocity = Velocity;
-
-        if (!IsOnFloor())
-            velocity.Y += Gravity * (float)delta;
-
-        if (Input.IsActionPressed("jump") && IsOnFloor())
-            velocity.Y = JumpVelocity;
-
-        float axis = Input.GetAxis("move_left", "move_right");
-
-        if (IsOnFloor())
-            velocity.X = Mathf.Lerp(velocity.X, axis * Speed, Acceleration * (float)delta);
-        else
-            velocity.X = Mathf.Lerp(velocity.X, axis * Speed, (Acceleration / 5.0f) * (float)delta);
-
-        Velocity = velocity;
-        MoveAndSlide();
     }
 
     public override void _Input(InputEvent @event)
