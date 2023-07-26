@@ -16,6 +16,9 @@ public partial class Fall : State
     [Export]
     private State _walk;
 
+    [Export]
+    private State _wallSlide;
+
     private float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
     public override State PhysicsProcess(double delta)
@@ -36,6 +39,9 @@ public partial class Fall : State
 
             return _idle;
         }
+
+        if (Entity.IsOnWall())
+            return _wallSlide;
 
         return null;
     }
