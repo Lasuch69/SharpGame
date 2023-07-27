@@ -37,7 +37,10 @@ This project doesn't contain any external dependencies so export process is exac
 ### Assets
 
 
-[1 Bit Platformer Pack](https://kenney.nl/assets/1-bit-platformer-pack) from Kenney
+[1 Bit Platformer Pack](https://kenney.nl/assets/1-bit-platformer-pack) from [Kenney](https://kenney.nl/).
+
+
+[SmoothPixel](https://github.com/CptPotato/GodotThings/tree/master/SmoothPixelFiltering) by [CptPotato](https://github.com/CptPotato).
 
 
 ## Contributing
