@@ -45,21 +45,6 @@ columns = 6
 script = ExtResource("2_u8bod")
 HeartTexture = ExtResource("1_oax7v")
 
-[node name="TextureRect" type="TextureRect" parent="Health/Health"]
-layout_mode = 2
-texture = ExtResource("1_oax7v")
-stretch_mode = 4
-
-[node name="TextureRect2" type="TextureRect" parent="Health/Health"]
-layout_mode = 2
-texture = ExtResource("1_oax7v")
-stretch_mode = 4
-
-[node name="TextureRect3" type="TextureRect" parent="Health/Health"]
-layout_mode = 2
-texture = ExtResource("1_oax7v")
-stretch_mode = 4
-
 [node name="Score" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 1
