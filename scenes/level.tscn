@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://csiaty10i3jsm"]
+[gd_scene load_steps=6 format=3 uid="uid://csiaty10i3jsm"]
 
+[ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://resources/shaders/SmoothPixel/SmoothPixel.material" id="1_pgw5c"]
 [ext_resource type="TileSet" uid="uid://b8kdro41itmwg" path="res://resources/tile_set.tres" id="1_vh6go"]
 [ext_resource type="Script" path="res://scripts/TileMap.cs" id="2_yv0ej"]
 
@@ -15,6 +16,8 @@ repeat = 1
 [node name="Level" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
+texture_filter = 2
+material = ExtResource("1_pgw5c")
 tile_set = ExtResource("1_vh6go")
 navigation_visibility_mode = 1
 format = 2

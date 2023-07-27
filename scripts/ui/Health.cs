@@ -6,6 +6,9 @@ public partial class Health : GridContainer
     [Export]
     public Texture2D HeartTexture;
 
+    [Export]
+    public Material HeartMaterial;
+
     private HealthComponent _playerHealth;
     private Game _game;
 
@@ -27,7 +30,8 @@ public partial class Health : GridContainer
         return new TextureRect
         {
             StretchMode = TextureRect.StretchModeEnum.KeepAspect,
-            Texture = HeartTexture
+            Texture = HeartTexture,
+            Material = HeartMaterial
         };
     }
 

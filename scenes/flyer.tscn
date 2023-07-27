@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b6pcofl3e18cs"]
+[gd_scene load_steps=13 format=3 uid="uid://b6pcofl3e18cs"]
 
 [ext_resource type="Script" path="res://scripts/entities/Flyer.cs" id="1_2c8no"]
 [ext_resource type="SpriteFrames" uid="uid://723dr8pvca3g" path="res://resources/flyer_anim.tres" id="1_w6ukf"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scripts/components/NavigationDebug.cs" id="3_ke83r"]
 [ext_resource type="Script" path="res://scripts/components/DamageComponent.cs" id="3_u4vhe"]
 [ext_resource type="Script" path="res://scripts/components/HitboxComponent.cs" id="6_6po12"]
+[ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://resources/shaders/SmoothPixel/SmoothPixel.material" id="9_ysyve"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_trmry"]
 radius = 4.0
@@ -53,6 +54,8 @@ script = ExtResource("3_ke83r")
 script = ExtResource("3_hsadj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PhysicsInterpolation"]
+texture_filter = 2
+material = ExtResource("9_ysyve")
 position = Vector2(0, -1)
 sprite_frames = ExtResource("1_w6ukf")
 animation = &"Idle"

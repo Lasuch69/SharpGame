@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bcpbypv8eknf7"]
+[gd_scene load_steps=10 format=3 uid="uid://bcpbypv8eknf7"]
 
 [ext_resource type="Script" path="res://scripts/components/HitboxComponent.cs" id="1_3fifd"]
 [ext_resource type="Script" path="res://scripts/Projectile.cs" id="1_28v6d"]
 [ext_resource type="Script" path="res://scripts/components/DamageComponent.cs" id="1_xdfwa"]
 [ext_resource type="Script" path="res://scripts/PhysicsInterpolation.cs" id="4_0cdrg"]
+[ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://resources/shaders/SmoothPixel/SmoothPixel.material" id="5_cc4oa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2unfc"]
 radius = 4.0
@@ -47,6 +48,8 @@ shape = SubResource("CircleShape2D_2unfc")
 script = ExtResource("4_0cdrg")
 
 [node name="Sprite2D" type="Sprite2D" parent="PhysicsInterpolation"]
+texture_filter = 2
+material = ExtResource("5_cc4oa")
 texture = SubResource("GradientTexture2D_j4ss6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

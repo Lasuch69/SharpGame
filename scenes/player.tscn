@@ -1,21 +1,17 @@
-[gd_scene load_steps=18 format=3 uid="uid://bdiobw2ao84e3"]
+[gd_scene load_steps=17 format=3 uid="uid://bdiobw2ao84e3"]
 
 [ext_resource type="Script" path="res://scripts/entities/Player.cs" id="1_kuu2q"]
 [ext_resource type="Texture2D" uid="uid://dif4f7yednbgr" path="res://assets/sprites/player.png" id="2_hnpgu"]
 [ext_resource type="Script" path="res://scripts/PhysicsInterpolation.cs" id="2_jn4dg"]
 [ext_resource type="PackedScene" uid="uid://bcpbypv8eknf7" path="res://scenes/projectile.tscn" id="2_oyhvt"]
 [ext_resource type="Script" path="res://scripts/components/HealthComponent.cs" id="3_0t41e"]
-[ext_resource type="Shader" path="res://resources/shaders/outline.gdshader" id="5_pdomj"]
+[ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://resources/shaders/SmoothPixel/SmoothPixel.material" id="5_4uogm"]
 [ext_resource type="Script" path="res://scripts/entities/states/StateManager.cs" id="7_wys87"]
 [ext_resource type="Script" path="res://scripts/entities/states/Idle.cs" id="8_6ulpx"]
 [ext_resource type="Script" path="res://scripts/entities/states/Walk.cs" id="9_4sb3d"]
 [ext_resource type="Script" path="res://scripts/entities/states/Jump.cs" id="10_cvs8g"]
 [ext_resource type="Script" path="res://scripts/entities/states/Fall.cs" id="11_8s3xy"]
 [ext_resource type="Script" path="res://scripts/entities/states/WallSlide.cs" id="12_c4rer"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_chn0n"]
-shader = ExtResource("5_pdomj")
-shader_parameter/enabled = false
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s5uvd"]
 radius = 6.0
@@ -74,7 +70,8 @@ _health = 3
 script = ExtResource("2_jn4dg")
 
 [node name="Sprite2D" type="Sprite2D" parent="PhysicsInterpolation"]
-material = SubResource("ShaderMaterial_chn0n")
+texture_filter = 2
+material = ExtResource("5_4uogm")
 texture = ExtResource("2_hnpgu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
