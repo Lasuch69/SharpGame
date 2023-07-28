@@ -57,7 +57,8 @@ public partial class WallSlide : State
             return _idle;
         }
 
-        bool isColliding = IsColliding(Entity.Position, Entity.Position + -_wallNormal * SnapLength);
+        bool isColliding = 
+            IsColliding(Entity.Position, Entity.Position + -_wallNormal * SnapLength);
 
         if (!isColliding)
             return _fall;

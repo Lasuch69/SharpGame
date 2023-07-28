@@ -15,9 +15,10 @@ public partial class Idle : State
     [Export]
     State _walk;
 
-    public override State PhysicsProcess(double delta)
+    public override State PhysicsProcess(double d)
     {
-        Entity.Velocity = Entity.Velocity.Lerp(Vector2.Zero, Acceleration * (float)delta);
+        var delta = (float)d;
+        Entity.Velocity = Entity.Velocity.Lerp(Vector2.Zero, Acceleration * delta);
         Entity.MoveAndSlide();
 
         float input = Godot.Input.GetAxis("move_left", "move_right");

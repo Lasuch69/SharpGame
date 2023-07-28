@@ -40,7 +40,9 @@ public partial class Flyer : CharacterBody2D
         Target = _game.Player;
         _game.PlayerChanged += (player) => Target = player;
 
-        HitboxComponent.TargetEntered += (target) => DamageComponent.ApplyDamage(target.GetNode<HealthComponent>("HealthComponent"));
+        HitboxComponent.TargetEntered += (target) => 
+            DamageComponent.ApplyDamage(
+                target.GetNode<HealthComponent>("HealthComponent"));
 
         HealthComponent.HealthEmpty += OnHealthEmpty;
     }

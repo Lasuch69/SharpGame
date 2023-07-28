@@ -13,8 +13,9 @@ public partial class PhysicsInterpolation : Node2D
     public override void _Process(double delta)
     {
         Vector2 newPosition = _parent.Velocity * _physicsDelta;
-        float physicsInterpolationFraction = (float)Engine.GetPhysicsInterpolationFraction();
+        float physicsInterpolationFraction = 
+            (float)Engine.GetPhysicsInterpolationFraction();
 
-        this.Position = Vector2.Zero.Lerp(newPosition, physicsInterpolationFraction);
+        Position = Vector2.Zero.Lerp(newPosition, physicsInterpolationFraction);
     }
 }
