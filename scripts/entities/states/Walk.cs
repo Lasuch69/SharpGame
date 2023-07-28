@@ -22,7 +22,7 @@ public partial class Walk : State
     {
         float input = Godot.Input.GetAxis("move_left", "move_right");
 
-        Vector2 velocity = new Vector2(Speed * input, 0.0f);
+        var velocity = new Vector2(Speed * input, 0.0f);
         Entity.Velocity = Entity.Velocity.Lerp(velocity, Acceleration * (float)delta);
         Entity.MoveAndSlide();
 
