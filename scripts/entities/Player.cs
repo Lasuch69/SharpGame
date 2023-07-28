@@ -1,3 +1,5 @@
+namespace SharpGame;
+
 [GlobalClass]
 public sealed partial class Player : CharacterBody2D
 {

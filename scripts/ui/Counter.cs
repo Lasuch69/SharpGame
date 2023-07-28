@@ -1,3 +1,5 @@
+namespace SharpGame;
+
 public partial class Counter : Label
 {
     private ulong _timestamp;

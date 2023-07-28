@@ -1,3 +1,5 @@
+namespace SharpGame;
+
 public partial class Navigation : Node
 {
     private AStarGrid2D _aStar = new();

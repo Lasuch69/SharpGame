@@ -1,3 +1,5 @@
+namespace SharpGame;
+
 public partial class HitboxComponent : Area2D
 {
     [Signal]

@@ -1,3 +1,5 @@
+namespace SharpGame;
+
 public partial class Spawner : Node2D
 {
     [Signal]

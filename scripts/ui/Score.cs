@@ -1,3 +1,5 @@
+namespace SharpGame;
+
 public partial class Score : Label
 {
     private Game _game;

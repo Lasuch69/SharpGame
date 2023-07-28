@@ -1,3 +1,5 @@
+namespace SharpGame;
+
 [GlobalClass]
 public partial class PhysicsInterpolation : Node2D
 {
