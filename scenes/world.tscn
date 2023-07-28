@@ -12,14 +12,9 @@
 script = ExtResource("1_v6hlk")
 _spawner = NodePath("Spawner")
 
-[node name="Spawner" type="Node2D" parent="." node_paths=PackedStringArray("_player", "_timer")]
+[node name="Spawner" type="Node2D" parent="." node_paths=PackedStringArray("_player")]
 script = ExtResource("2_lvh7q")
 _player = NodePath("../Player")
-_timer = NodePath("Timer")
-
-[node name="Timer" type="Timer" parent="Spawner"]
-process_callback = 0
-wait_time = 2.0
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 2
@@ -39,6 +34,7 @@ layer_1/tile_data = PackedInt32Array(196600, 917504, 0, 65557, 983040, 0, 131093
 script = ExtResource("5_ch4fl")
 
 [node name="Player" parent="." instance=ExtResource("2_26r7e")]
+position = Vector2(230, 34)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 limit_left = -624
