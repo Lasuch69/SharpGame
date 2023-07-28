@@ -17,10 +17,9 @@ public partial class NavigationComponent : Node
     {
         Vector2 direction = new();
 
-        if (_path.Count < 2)
-        {
+        // Return null if path does not exist or is less than 2
+        if (_path == null || _path.Count < 2)
             return direction;
-        }
 
         direction = from.DirectionTo(_path[1]);
 
