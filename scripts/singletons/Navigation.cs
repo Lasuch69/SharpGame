@@ -1,9 +1,8 @@
-using Godot;
-using System;
+namespace SharpGame;
 
 public partial class Navigation : Node
 {
-    private AStarGrid2D _aStar = new();
+    AStarGrid2D _aStar = new();
 
     public override void _Ready()
     {
@@ -11,7 +10,7 @@ public partial class Navigation : Node
         _aStar.JumpingEnabled = true;
     }
 
-    private Vector2I GetId(Vector2 position)
+    Vector2I GetId(Vector2 position)
     {
         Vector2I cell = (Vector2I)((position - _aStar.Offset) / _aStar.CellSize).Round();
         return cell.Clamp(_aStar.Region.Position, _aStar.Region.End);
@@ -33,7 +32,8 @@ public partial class Navigation : Node
         return path;
     }
 
-    public Godot.Collections.Array<Vector2I> GetIdPath(Vector2I fromId, Vector2I toId) => _aStar.GetIdPath(fromId, toId);
+    public Godot.Collections.Array<Vector2I> GetIdPath(Vector2I fromId, Vector2I toId) => 
+        _aStar.GetIdPath(fromId, toId);
 
     public void SetTileMap(TileMap tileMap)
     {

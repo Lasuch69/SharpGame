@@ -1,5 +1,4 @@
-using Godot;
-using System;
+namespace SharpGame;
 
 [GlobalClass]
 public partial class Jump : State
@@ -8,9 +7,9 @@ public partial class Jump : State
     public float JumpForce = 150.0f;
 
     [Export]
-    private State _fall;
+    State _fall;
 
-    private float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+    float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
     public override void Enter()
     {

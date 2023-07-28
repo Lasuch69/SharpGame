@@ -1,5 +1,8 @@
-using Godot;
-using System;
+global using Godot;
+global using System;
+global using System.Linq;
+
+namespace SharpGame;
 
 public partial class Game : Node
 {
@@ -35,6 +38,6 @@ public partial class Game : Node
         }
     }
 
-    private int _score = 0;
-    private Player _player = null;
+    int _score = 0;
+    Player _player = null;
 }

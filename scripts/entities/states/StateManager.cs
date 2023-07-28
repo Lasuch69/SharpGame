@@ -1,5 +1,4 @@
-using Godot;
-using System;
+namespace SharpGame;
 
 [GlobalClass]
 public partial class StateManager : Node
@@ -51,7 +50,7 @@ public partial class StateManager : Node
         ChangeState(state);
     }
 
-    private void ChangeState(State newState)
+    void ChangeState(State newState)
     {
         if (newState == null)
             return;

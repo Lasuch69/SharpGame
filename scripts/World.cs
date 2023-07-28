@@ -1,5 +1,4 @@
-using Godot;
-using System;
+namespace SharpGame;
 
 public partial class World : Node
 {
@@ -8,10 +7,10 @@ public partial class World : Node
 
     public int Wave { get => _wave; }
 
-    private int _wave = 1;
+    int _wave = 1;
 
     [Export]
-    private Spawner _spawner = null;
+    Spawner _spawner = null;
 
     public override void _Ready()
     {

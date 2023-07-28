@@ -1,5 +1,4 @@
-using Godot;
-using System;
+namespace SharpGame;
 
 public partial class Spawner : Node2D
 {
@@ -7,17 +6,17 @@ public partial class Spawner : Node2D
     public delegate void WaveFinishedEventHandler();
 
     [Export]
-    private Player _player = null;
+    Player _player = null;
 
     [Export]
-    private Timer _timer = null;
+    Timer _timer = null;
 
-    private PhysicsDirectSpaceState2D _spaceState = null;
-    private PackedScene _enemyScene = (PackedScene)GD.Load("res://scenes/flyer.tscn");
-    private Random _random = new();
+    PhysicsDirectSpaceState2D _spaceState = null;
+    PackedScene _enemyScene = (PackedScene)GD.Load("res://scenes/flyer.tscn");
+    Random _random = new();
 
-    private Godot.Collections.Array<PackedScene> _queue = new();
-    private Godot.Collections.Array<Node2D> _entities = new();
+    Godot.Collections.Array<PackedScene> _queue = new();
+    Godot.Collections.Array<Node2D> _entities = new();
 
     public override void _Ready() => _timer.Timeout += OnTimerTimeout;
 
@@ -26,7 +25,7 @@ public partial class Spawner : Node2D
         _spaceState ??= PhysicsServer2D.SpaceGetDirectState(GetWorld2D().Space);
     }
 
-    private void OnTimerTimeout()
+    void OnTimerTimeout()
     {
         if (_queue.Count == 0)
         {
@@ -60,7 +59,7 @@ public partial class Spawner : Node2D
         _timer.Start();
     }
 
-    private Vector2 GetRandomPoint(float desiredDistance)
+    Vector2 GetRandomPoint(float desiredDistance)
     {
         float a = _random.NextSingle() * 2 * MathF.PI;
 
@@ -72,7 +71,7 @@ public partial class Spawner : Node2D
         return new Vector2(r * MathF.Cos(a), r * MathF.Sin(a));
     }
 
-    private Node2D Spawn(PackedScene scene)
+    Node2D Spawn(PackedScene scene)
     {
         Node instance = scene.Instantiate();
 

@@ -1,5 +1,4 @@
-using Godot;
-using System;
+namespace SharpGame;
 
 public partial class HitboxComponent : Area2D
 {

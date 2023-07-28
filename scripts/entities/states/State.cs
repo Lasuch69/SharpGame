@@ -1,5 +1,4 @@
-using Godot;
-using System;
+namespace SharpGame;
 
 [GlobalClass]
 public partial class State : Node

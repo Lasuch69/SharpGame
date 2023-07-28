@@ -1,9 +1,8 @@
-using Godot;
-using System;
+namespace SharpGame;
 
 public partial class Score : Label
 {
-    private Game _game;
+    Game _game;
 
     public override void _Ready()
     {

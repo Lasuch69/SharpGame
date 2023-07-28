@@ -1,5 +1,4 @@
-using Godot;
-using System;
+namespace SharpGame;
 
 [GlobalClass]
 public partial class WallSlide : State
@@ -14,17 +13,17 @@ public partial class WallSlide : State
     public float SnapLength = 8.0f;
 
     [Export]
-    private State _fall;
+    State _fall;
 
     [Export]
-    private State _idle;
+    State _idle;
 
     [Export]
-    private State _walk;
+    State _walk;
 
-    private PhysicsDirectSpaceState2D _spaceState = null;
-    private Vector2 _wallNormal = Vector2.Zero;
-    private bool _jumpOff = false;
+    PhysicsDirectSpaceState2D _spaceState = null;
+    Vector2 _wallNormal = Vector2.Zero;
+    bool _jumpOff = false;
 
     public override void Enter()
     {
@@ -58,7 +57,8 @@ public partial class WallSlide : State
             return _idle;
         }
 
-        bool isColliding = IsColliding(Entity.Position, Entity.Position + -_wallNormal * SnapLength);
+        bool isColliding = 
+            IsColliding(Entity.Position, Entity.Position + -_wallNormal * SnapLength);
 
         if (!isColliding)
             return _fall;
@@ -74,7 +74,7 @@ public partial class WallSlide : State
         return null;
     }
 
-    private bool IsColliding(Vector2 from, Vector2 to)
+    bool IsColliding(Vector2 from, Vector2 to)
     {
         PhysicsRayQueryParameters2D parameters = new()
         {

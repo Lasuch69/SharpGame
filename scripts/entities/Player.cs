@@ -1,5 +1,4 @@
-using Godot;
-using System;
+namespace SharpGame;
 
 [GlobalClass]
 public sealed partial class Player : CharacterBody2D
@@ -11,7 +10,7 @@ public sealed partial class Player : CharacterBody2D
     public PackedScene Projectile;
 
     [Export]
-    private AnimationPlayer AnimationPlayer;
+    AnimationPlayer AnimationPlayer;
 
     public override void _Ready()
     {
@@ -27,18 +26,23 @@ public sealed partial class Player : CharacterBody2D
 
     public override void _Input(InputEvent @event)
     {
-        if (@event.IsActionPressed("shoot"))
-        {
-            Projectile projectile = (Projectile)Projectile.Instantiate();
+        Shoot(@event);
+    }
 
-            Vector2 mousePosition = GetGlobalMousePosition();
+    void Shoot(InputEvent @event)
+    {
+        if (!@event.IsActionPressed("shoot"))
+            return;
 
-            projectile.Position = (this.Position.DirectionTo(mousePosition) * 12.0f) + this.Position;
-            projectile.Velocity = this.Position.DirectionTo(mousePosition) * 256.0f;
+        var projectile = (Projectile)Projectile.Instantiate();
 
-            projectile.HitboxComponent.TargetGroups.Add("Enemy");
+        Vector2 mousePosition = GetGlobalMousePosition();
 
-            GetParent().AddChild(projectile);
-        }
+        projectile.Position = Position.DirectionTo(mousePosition) * 12.0f + Position;
+        projectile.Velocity = Position.DirectionTo(mousePosition) * 256.0f;
+
+        projectile.HitboxComponent.TargetGroups.Add("Enemy");
+
+        GetParent().AddChild(projectile);
     }
 }

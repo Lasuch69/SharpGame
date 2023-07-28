@@ -1,5 +1,4 @@
-using Godot;
-using System;
+namespace SharpGame;
 
 [GlobalClass]
 public partial class Walk : State
@@ -11,19 +10,19 @@ public partial class Walk : State
     public float Acceleration = 12.0f;
 
     [Export]
-    private State _fall;
+    State _fall;
 
     [Export]
-    private State _idle;
+    State _idle;
 
     [Export]
-    private State _jump;
+    State _jump;
 
     public override State PhysicsProcess(double delta)
     {
         float input = Godot.Input.GetAxis("move_left", "move_right");
 
-        Vector2 velocity = new Vector2(Speed * input, 0.0f);
+        var velocity = new Vector2(Speed * input, 0.0f);
         Entity.Velocity = Entity.Velocity.Lerp(velocity, Acceleration * (float)delta);
         Entity.MoveAndSlide();
 

@@ -1,9 +1,8 @@
-using Godot;
-using System;
+namespace SharpGame;
 
 public partial class TileMap : Godot.TileMap
 {
-    private Navigation _navigation;
+    Navigation _navigation;
 
     public override void _Ready()
     {
