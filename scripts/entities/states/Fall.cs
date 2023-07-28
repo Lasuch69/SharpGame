@@ -10,15 +10,15 @@ public partial class Fall : State
     public float Acceleration = 4.0f;
 
     [Export]
-    private State _idle;
+    State _idle;
 
     [Export]
-    private State _walk;
+    State _walk;
 
     [Export]
-    private State _wallSlide;
+    State _wallSlide;
 
-    private float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+    float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
     public override State PhysicsProcess(double delta)
     {

@@ -3,8 +3,8 @@ namespace SharpGame;
 [GlobalClass]
 public partial class PhysicsInterpolation : Node2D
 {
-    private CharacterBody2D _parent;
-    private float _physicsDelta;
+    CharacterBody2D _parent;
+    float _physicsDelta;
 
     public override void _Ready() => _parent = GetParent<CharacterBody2D>();
 

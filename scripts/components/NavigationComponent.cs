@@ -5,8 +5,8 @@ public partial class NavigationComponent : Node
 {
     public Godot.Collections.Array<Vector2> Path { get => _path; }
 
-    private Navigation _navigation;
-    private Godot.Collections.Array<Vector2> _path = new();
+    Navigation _navigation;
+    Godot.Collections.Array<Vector2> _path = new();
 
     public override void _Ready() => _navigation = GetNode<Navigation>("/root/Navigation");
 

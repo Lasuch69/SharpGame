@@ -10,7 +10,7 @@ public sealed partial class Player : CharacterBody2D
     public PackedScene Projectile;
 
     [Export]
-    private AnimationPlayer AnimationPlayer;
+    AnimationPlayer AnimationPlayer;
 
     public override void _Ready()
     {

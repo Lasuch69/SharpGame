@@ -8,10 +8,10 @@ public partial class Health : GridContainer
     [Export]
     public Material HeartMaterial;
 
-    private HealthComponent _playerHealth;
-    private Game _game;
+    HealthComponent _playerHealth;
+    Game _game;
 
-    private Godot.Collections.Array<TextureRect> _textureRectsPool = new();
+    Godot.Collections.Array<TextureRect> _textureRectsPool = new();
 
     public override void _Ready()
     {
@@ -24,14 +24,14 @@ public partial class Health : GridContainer
         SetHealth(_game.Player.HealthComponent.GetHealth());
     }
 
-    private TextureRect CreateTextureRect() => new()
+    TextureRect CreateTextureRect() => new()
     {
         StretchMode = TextureRect.StretchModeEnum.KeepAspect,
         Texture = HeartTexture,
         Material = HeartMaterial
     };
 
-    private void SetPlayer(Player player)
+    void SetPlayer(Player player)
     {
         if (_playerHealth != null)
             _playerHealth.HealthChanged -= OnPlayerHealthChanged;
@@ -43,9 +43,9 @@ public partial class Health : GridContainer
         _playerHealth.HealthChanged += OnPlayerHealthChanged;
     }
 
-    private void OnPlayerHealthChanged(int newHealth, int oldHealth) => SetHealth(newHealth);
+    void OnPlayerHealthChanged(int newHealth, int oldHealth) => SetHealth(newHealth);
 
-    private void SetHealth(int health)
+    void SetHealth(int health)
     {
         if (health > _textureRectsPool.Count)
         {

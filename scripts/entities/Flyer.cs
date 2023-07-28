@@ -22,15 +22,15 @@ public partial class Flyer : CharacterBody2D
     public NavigationComponent NavigationComponent;
 
     [Export]
-    private PackedScene _deathVfx = null;
+    PackedScene _deathVfx = null;
 
     public CollisionObject2D Target;
 
-    private Game _game;
+    Game _game;
 
-    private PhysicsDirectSpaceState2D _spaceState;
+    PhysicsDirectSpaceState2D _spaceState;
 
-    private double _time = 0.0;
+    double _time = 0.0;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -78,7 +78,7 @@ public partial class Flyer : CharacterBody2D
         MoveAndSlide();
     }
 
-    private void OnHealthEmpty()
+    void OnHealthEmpty()
     {
         _game.Score += ScoreOnKill;
 

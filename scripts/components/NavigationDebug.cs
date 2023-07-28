@@ -3,7 +3,7 @@ namespace SharpGame;
 [GlobalClass]
 public partial class NavigationDebug : Node2D
 {
-    private NavigationComponent _navigationComponent;
+    NavigationComponent _navigationComponent;
 
     public override void _Ready() => _navigationComponent = GetParent<NavigationComponent>();
 

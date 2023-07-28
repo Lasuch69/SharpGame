@@ -10,13 +10,13 @@ public partial class Walk : State
     public float Acceleration = 12.0f;
 
     [Export]
-    private State _fall;
+    State _fall;
 
     [Export]
-    private State _idle;
+    State _idle;
 
     [Export]
-    private State _jump;
+    State _jump;
 
     public override State PhysicsProcess(double delta)
     {

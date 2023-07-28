@@ -10,10 +10,10 @@ public partial class HealthComponent : Node
     public delegate void HealthEmptyEventHandler();
 
     [Export]
-    private int _maxHealth = 1;
+    int _maxHealth = 1;
 
     [Export]
-    private int _health = 1;
+    int _health = 1;
 
     public void SetHealth(int health)
     {
