@@ -1,5 +1,3 @@
-using GodotUtils;
-
 namespace SharpGame;
 
 public partial class Spawner : Node2D
@@ -21,7 +19,7 @@ public partial class Spawner : Node2D
 
     public override void _Ready()
     {
-        _timer = new GTimer(this, 2000);
+        _timer = new GTimer(this, 2000) { Loop = true };
         _timer.Finished += OnTimerTimeout;
     }
 
