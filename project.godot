@@ -38,6 +38,11 @@ window/stretch/aspect="keep_height"
 
 project/assembly_name="SharpGame"
 
+[filesystem]
+
+import/blender/enabled=false
+import/fbx/enabled=false
+
 [gui]
 
 theme/custom="res://resources/ui.theme"
