@@ -1,6 +1,3 @@
-using Godot;
-using System;
-
 [GlobalClass]
 public sealed partial class Player : CharacterBody2D
 {

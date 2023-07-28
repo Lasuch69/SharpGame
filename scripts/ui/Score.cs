@@ -1,6 +1,3 @@
-using Godot;
-using System;
-
 public partial class Score : Label
 {
     private Game _game;
