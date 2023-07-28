@@ -19,6 +19,10 @@ public partial class Navigation : Node
 
     public Godot.Collections.Array<Vector2> GetPath(Vector2 from, Vector2 to)
     {
+        // Return null if the path is outside the tilemaps region
+        if (to.X > _aStar.Region.Size.X || to.Y > _aStar.Region.Size.Y)
+            return null;
+
         Godot.Collections.Array<Vector2> path = new();
 
         foreach (Vector2I cell in _aStar.GetIdPath(GetId(from), GetId(to)))

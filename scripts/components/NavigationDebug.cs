@@ -12,7 +12,8 @@ public partial class NavigationDebug : Node2D
     {
         var path = _navigationComponent.Path;
 
-        if (path.Count < 2)
+        // Do not draw debug line if path does not exist or is less than 2 tiles
+        if (path == null || path.Count < 2)
             return;
 
         for (int i = 0; i < path.Count - 1; i++)
