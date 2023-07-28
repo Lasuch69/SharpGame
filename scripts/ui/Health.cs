@@ -24,15 +24,12 @@ public partial class Health : GridContainer
         SetHealth(_game.Player.HealthComponent.GetHealth());
     }
 
-    private TextureRect CreateTextureRect()
+    private TextureRect CreateTextureRect() => new()
     {
-        return new TextureRect
-        {
-            StretchMode = TextureRect.StretchModeEnum.KeepAspect,
-            Texture = HeartTexture,
-            Material = HeartMaterial
-        };
-    }
+        StretchMode = TextureRect.StretchModeEnum.KeepAspect,
+        Texture = HeartTexture,
+        Material = HeartMaterial
+    };
 
     private void SetPlayer(Player player)
     {
