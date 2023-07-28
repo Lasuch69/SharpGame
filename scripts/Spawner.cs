@@ -1,3 +1,5 @@
+using GodotUtils;
+
 namespace SharpGame;
 
 public partial class Spawner : Node2D
@@ -8,8 +10,7 @@ public partial class Spawner : Node2D
     [Export]
     Player _player = null;
 
-    [Export]
-    Timer _timer = null;
+    GTimer _timer;
 
     PhysicsDirectSpaceState2D _spaceState = null;
     PackedScene _enemyScene = (PackedScene)GD.Load("res://scenes/flyer.tscn");
@@ -18,7 +19,11 @@ public partial class Spawner : Node2D
     Godot.Collections.Array<PackedScene> _queue = new();
     Godot.Collections.Array<Node2D> _entities = new();
 
-    public override void _Ready() => _timer.Timeout += OnTimerTimeout;
+    public override void _Ready()
+    {
+        _timer = new GTimer(this, 2000);
+        _timer.Finished += OnTimerTimeout;
+    }
 
     public override void _PhysicsProcess(double delta)
     {

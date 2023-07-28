@@ -8,8 +8,7 @@ public partial class Projectile : CharacterBody2D
     [Export]
     public HitboxComponent HitboxComponent;
 
-    [Export]
-    public Timer Timer;
+    GTimer _timer;
 
     public override void _Ready()
     {
@@ -23,7 +22,9 @@ public partial class Projectile : CharacterBody2D
             QueueFree();
         };
 
-        Timer.Timeout += () => QueueFree();
+        _timer = new GTimer(this, 3000);
+        _timer.Start();
+        _timer.Finished += () => QueueFree();
     }
 
     public override void _PhysicsProcess(double delta)
