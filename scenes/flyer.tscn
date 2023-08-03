@@ -1,12 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://b6pcofl3e18cs"]
+[gd_scene load_steps=11 format=3 uid="uid://b6pcofl3e18cs"]
 
 [ext_resource type="Script" path="res://scripts/entities/Flyer.cs" id="1_2c8no"]
 [ext_resource type="SpriteFrames" uid="uid://723dr8pvca3g" path="res://resources/flyer_anim.tres" id="1_w6ukf"]
 [ext_resource type="Script" path="res://scripts/components/HealthComponent.cs" id="2_6x0d2"]
-[ext_resource type="Script" path="res://scripts/components/NavigationComponent.cs" id="2_fc37k"]
 [ext_resource type="PackedScene" uid="uid://cyrld2bj2no50" path="res://scenes/death_vfx.tscn" id="2_qtb0f"]
 [ext_resource type="Script" path="res://scripts/PhysicsInterpolation.cs" id="3_hsadj"]
-[ext_resource type="Script" path="res://scripts/components/NavigationDebug.cs" id="3_ke83r"]
 [ext_resource type="Script" path="res://scripts/components/DamageComponent.cs" id="3_u4vhe"]
 [ext_resource type="Script" path="res://scripts/components/HitboxComponent.cs" id="6_6po12"]
 [ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://resources/shaders/SmoothPixel/SmoothPixel.material" id="9_ysyve"]
@@ -17,7 +15,7 @@ radius = 4.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_kl1xe"]
 radius = 4.0
 
-[node name="Flyer" type="CharacterBody2D" node_paths=PackedStringArray("DamageComponent", "HealthComponent", "HitboxComponent", "NavigationComponent") groups=["Enemy"]]
+[node name="Flyer" type="CharacterBody2D" node_paths=PackedStringArray("DamageComponent", "HealthComponent", "HitboxComponent", "_navigationAgent") groups=["Enemy"]]
 collision_layer = 2
 collision_mask = 2
 motion_mode = 1
@@ -25,11 +23,15 @@ script = ExtResource("1_2c8no")
 DamageComponent = NodePath("DamageComponent")
 HealthComponent = NodePath("HealthComponent")
 HitboxComponent = NodePath("HitboxComponent")
-NavigationComponent = NodePath("NavigationComponent")
+_navigationAgent = NodePath("NavigationAgent2D")
 _deathVfx = ExtResource("2_qtb0f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_trmry")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+radius = 4.0
+max_speed = 80.0
 
 [node name="DamageComponent" type="Node" parent="."]
 script = ExtResource("3_u4vhe")
@@ -43,12 +45,6 @@ TargetGroups = ["Player"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 shape = SubResource("CircleShape2D_kl1xe")
-
-[node name="NavigationComponent" type="Node" parent="."]
-script = ExtResource("2_fc37k")
-
-[node name="NavigationDebug" type="Node2D" parent="NavigationComponent"]
-script = ExtResource("3_ke83r")
 
 [node name="PhysicsInterpolation" type="Node2D" parent="."]
 script = ExtResource("3_hsadj")

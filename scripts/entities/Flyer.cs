@@ -3,95 +3,89 @@ namespace SharpGame;
 [GlobalClass]
 public partial class Flyer : CharacterBody2D
 {
-    [Export]
-    public float Speed = 80.0f;
+	[Export]
+	public float Speed = 80.0f;
 
-    [Export]
-    public int ScoreOnKill = 100;
+	[Export]
+	public int ScoreOnKill = 100;
 
-    [Export]
-    public DamageComponent DamageComponent;
+	[Export]
+	public DamageComponent DamageComponent;
 
-    [Export]
-    public HealthComponent HealthComponent;
+	[Export]
+	public HealthComponent HealthComponent;
 
-    [Export]
-    public HitboxComponent HitboxComponent;
+	[Export]
+	public HitboxComponent HitboxComponent;
 
-    [Export]
-    public NavigationComponent NavigationComponent;
+	[Export]
+	NavigationAgent2D _navigationAgent;
 
-    [Export]
-    PackedScene _deathVfx = null;
+	[Export]
+	PackedScene _deathVfx = null;
 
-    public CollisionObject2D Target;
+	Node2D _target;
 
-    Game _game;
+	Game _game;
 
-    PhysicsDirectSpaceState2D _spaceState;
+	double _time = 0.0;
 
-    double _time = 0.0;
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+		_game = GetNode<Game>("/root/Game");
 
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
-    {
-        _game = GetNode<Game>("/root/Game");
+		_target = _game.Player;
+		_game.PlayerChanged += (player) => _target = player;
 
-        Target = _game.Player;
-        _game.PlayerChanged += (player) => Target = player;
+		HitboxComponent.TargetEntered += (target) =>
+			DamageComponent.ApplyDamage(
+				target.GetNode<HealthComponent>("HealthComponent"));
 
-        HitboxComponent.TargetEntered += (target) => 
-            DamageComponent.ApplyDamage(
-                target.GetNode<HealthComponent>("HealthComponent"));
+		HealthComponent.HealthEmpty += OnHealthEmpty;
 
-        HealthComponent.HealthEmpty += OnHealthEmpty;
-    }
+		_navigationAgent.TargetPosition = this.Position;
 
-    public override void _PhysicsProcess(double delta)
-    {
-        _spaceState ??= PhysicsServer2D.SpaceGetDirectState(GetWorld2D().Space);
+		_navigationAgent.VelocityComputed += (velocity) =>
+			this.Velocity = velocity;
+	}
 
-        _time += delta;
+	public override void _PhysicsProcess(double delta)
+	{
+		_time += delta;
 
-        if (_time > 0.25)
-        {
-            _time = 0.0;
-            NavigationComponent.GeneratePath(Position, Target.Position);
-        }
+		if (_time > 0.2)
+		{
+			_time = 0.0;
+			_navigationAgent.TargetPosition = _target.Position;
+		}
 
-        var parameters = new PhysicsRayQueryParameters2D
-        {
-            From = Position,
-            To = Target.Position,
-            CollisionMask = 0b1,
-            Exclude = new Godot.Collections.Array<Rid> { Target.GetRid() }
-        };
+		if (_navigationAgent.AvoidanceEnabled)
+		{
+			Vector2 direction = this.Position.DirectionTo(_target.Position);
+			_navigationAgent.Velocity = direction * Speed;
+		}
+		else
+		{
+			Vector2 nextPathPoint = _navigationAgent.GetNextPathPosition();
+			Velocity = this.Position.DirectionTo(nextPathPoint) * Speed;
+		}
 
-        var result = _spaceState.IntersectRay(parameters);
+		MoveAndSlide();
+	}
 
-        if (result.Count == 0)
-            if (Position.DistanceTo(Target.Position) > 1.0f)
-                Velocity = Position.DirectionTo(Target.Position) * Speed;
-            else
-                Velocity = new();
-        else
-            Velocity = NavigationComponent.GetDirection(Position) * Speed;
+	void OnHealthEmpty()
+	{
+		_game.Score += ScoreOnKill;
 
-        MoveAndSlide();
-    }
+		if (_deathVfx != null)
+		{
+			Node2D instance = (Node2D)_deathVfx.Instantiate();
+			instance.Position = Position;
 
-    void OnHealthEmpty()
-    {
-        _game.Score += ScoreOnKill;
+			GetParent().AddChild(instance);
+		}
 
-        if (_deathVfx != null)
-        {
-            Node2D instance = (Node2D)_deathVfx.Instantiate();
-            instance.Position = Position;
-
-            GetParent().AddChild(instance);
-        }
-
-        QueueFree();
-    }
+		QueueFree();
+	}
 }

@@ -6,11 +6,18 @@
 [ext_resource type="Script" path="res://scripts/Spawner.cs" id="2_lvh7q"]
 [ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://resources/shaders/SmoothPixel/SmoothPixel.material" id="3_vid4n"]
 [ext_resource type="TileSet" uid="uid://b8kdro41itmwg" path="res://resources/tile_set.tres" id="4_5kqsq"]
-[ext_resource type="Script" path="res://scripts/TileMap.cs" id="5_ch4fl"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_irfwf"]
+vertices = PackedVector2Array(-616, -72, -640, -72, -640, -192, 656, -192, 616, -88, 656, -88, 616, -72, 600, -72, 600, -40, 584, -40, 584, 24, 520, 24, 520, 40, 408, 40, -600, -56, 408, 56, 312, 56, 312, 40, 184, 40, 184, 24, 72, 24, 72, 40, 24, 40, -584, -40, 24, 56, -216, 56, -424, 40, -216, 72, -392, 72, -392, 56, -424, 56, -584, 40, -600, -40, -616, -56)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(3, 5, 4), PackedInt32Array(4, 6, 7), PackedInt32Array(0, 4, 7), PackedInt32Array(0, 7, 8, 9), PackedInt32Array(9, 10, 11, 0), PackedInt32Array(0, 11, 12, 13, 14), PackedInt32Array(13, 15, 16, 17), PackedInt32Array(17, 18, 19), PackedInt32Array(20, 21, 22, 23), PackedInt32Array(23, 22, 24, 25, 26), PackedInt32Array(25, 27, 28, 29), PackedInt32Array(29, 30, 26), PackedInt32Array(26, 31, 23), PackedInt32Array(23, 32, 14), PackedInt32Array(14, 33, 0), PackedInt32Array(23, 14, 13, 19), PackedInt32Array(25, 29, 26), PackedInt32Array(13, 17, 19), PackedInt32Array(23, 19, 20)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-640, -72, -640, -192, 656, -192, 656, -88, 616, -88, 616, -72, 600, -72, 600, -40, 584, -40, 584, 24, 520, 24, 520, 40, 408, 40, 408, 56, 312, 56, 312, 40, 184, 40, 184, 24, 72, 24, 72, 40, 24, 40, 24, 56, -216, 56, -216, 72, -392, 72, -392, 56, -424, 56, -424, 40, -584, 40, -584, -40, -600, -40, -600, -56, -616, -56, -616, -72)])
 
 [node name="World" type="Node" node_paths=PackedStringArray("_spawner")]
 script = ExtResource("1_v6hlk")
 _spawner = NodePath("Spawner")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_irfwf")
 
 [node name="Spawner" type="Node2D" parent="." node_paths=PackedStringArray("_player", "_timer")]
 script = ExtResource("2_lvh7q")
@@ -36,7 +43,6 @@ layer_1/y_sort_enabled = false
 layer_1/y_sort_origin = 0
 layer_1/z_index = -1
 layer_1/tile_data = PackedInt32Array(196600, 917504, 0, 65557, 983040, 0, 131093, 983040, 1, 196573, 1048576, 1, 196574, 1179648, 0, 196576, 1114112, 1, 196578, 851968, 0, 262117, 1048576, 1, 327656, 1179648, 1, 327662, 1048576, 1, 327665, 1114112, 1, 262136, 917504, 1, 262139, 1114112, 1, 262140, 1179648, 0, 262142, 1179648, 0, 196609, 1048576, 0, 131076, 851968, 0, 65543, 1114112, 1, 65545, 1179648, 0, 131085, 1114112, 1, 131088, 1048576, 1, 131089, 1114112, 1, 196627, 1048576, 0, 196629, 983040, 2, 196631, 1179648, 1, 131099, 1179648, 0, 131101, 1048576, 1, 131103, 1048576, 0, 65569, 1114112, 1, 65571, 1048576, 0, 327658, 0, 7, 327659, 65536, 7, 327660, 131072, 7)
-script = ExtResource("5_ch4fl")
 
 [node name="Player" parent="." instance=ExtResource("2_26r7e")]
 
