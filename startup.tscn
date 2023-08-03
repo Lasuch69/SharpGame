@@ -6,8 +6,6 @@ script/source = "extends Node
 const MAIN = preload(\"res://scenes/main.tscn\")
 
 func _ready() -> void:
-	Settings.load_settings()
-	
 	get_tree().change_scene_to_packed(MAIN)
 "
 
