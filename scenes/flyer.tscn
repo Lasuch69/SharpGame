@@ -4,8 +4,8 @@
 [ext_resource type="SpriteFrames" uid="uid://723dr8pvca3g" path="res://resources/flyer_anim.tres" id="1_w6ukf"]
 [ext_resource type="Script" path="res://scripts/components/HealthComponent.cs" id="2_6x0d2"]
 [ext_resource type="PackedScene" uid="uid://cyrld2bj2no50" path="res://scenes/death_vfx.tscn" id="2_qtb0f"]
-[ext_resource type="Script" path="res://scripts/PhysicsInterpolation.cs" id="3_hsadj"]
 [ext_resource type="Script" path="res://scripts/components/DamageComponent.cs" id="3_u4vhe"]
+[ext_resource type="Script" path="res://scripts/physics_interpolation.gd" id="6_1uydy"]
 [ext_resource type="Script" path="res://scripts/components/HitboxComponent.cs" id="6_6po12"]
 [ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://resources/shaders/SmoothPixel/SmoothPixel.material" id="9_ysyve"]
 
@@ -46,8 +46,9 @@ TargetGroups = ["Player"]
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 shape = SubResource("CircleShape2D_kl1xe")
 
-[node name="PhysicsInterpolation" type="Node2D" parent="."]
-script = ExtResource("3_hsadj")
+[node name="PhysicsInterpolation" type="Node2D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("6_1uydy")
+target = NodePath("..")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PhysicsInterpolation"]
 texture_filter = 2

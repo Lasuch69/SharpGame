@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/components/HitboxComponent.cs" id="1_3fifd"]
 [ext_resource type="Script" path="res://scripts/Projectile.cs" id="1_28v6d"]
 [ext_resource type="Script" path="res://scripts/components/DamageComponent.cs" id="1_xdfwa"]
-[ext_resource type="Script" path="res://scripts/PhysicsInterpolation.cs" id="4_0cdrg"]
+[ext_resource type="Script" path="res://scripts/physics_interpolation.gd" id="4_linox"]
 [ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://resources/shaders/SmoothPixel/SmoothPixel.material" id="5_cc4oa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2unfc"]
@@ -44,8 +44,9 @@ script = ExtResource("1_3fifd")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 shape = SubResource("CircleShape2D_2unfc")
 
-[node name="PhysicsInterpolation" type="Node2D" parent="."]
-script = ExtResource("4_0cdrg")
+[node name="PhysicsInterpolation" type="Node2D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("4_linox")
+target = NodePath("..")
 
 [node name="Sprite2D" type="Sprite2D" parent="PhysicsInterpolation"]
 texture_filter = 2
