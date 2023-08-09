@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b6pcofl3e18cs"]
+[gd_scene load_steps=10 format=3 uid="uid://b6pcofl3e18cs"]
 
 [ext_resource type="Script" path="res://scripts/entities/Flyer.cs" id="1_2c8no"]
 [ext_resource type="SpriteFrames" uid="uid://723dr8pvca3g" path="res://resources/flyer_anim.tres" id="1_w6ukf"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://cyrld2bj2no50" path="res://scenes/death_vfx.tscn" id="2_qtb0f"]
 [ext_resource type="Script" path="res://scripts/components/DamageComponent.cs" id="3_u4vhe"]
 [ext_resource type="Script" path="res://scripts/physics_interpolation.gd" id="6_1uydy"]
-[ext_resource type="Script" path="res://scripts/components/HitboxComponent.cs" id="6_6po12"]
 [ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://resources/shaders/SmoothPixel/SmoothPixel.material" id="9_ysyve"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_trmry"]
@@ -15,15 +14,15 @@ radius = 4.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_kl1xe"]
 radius = 4.0
 
-[node name="Flyer" type="CharacterBody2D" node_paths=PackedStringArray("DamageComponent", "HealthComponent", "HitboxComponent", "_navigationAgent") groups=["Enemy"]]
+[node name="Flyer" type="CharacterBody2D" node_paths=PackedStringArray("Area2D", "DamageComponent", "HealthComponent", "NavigationAgent") groups=["Enemy"]]
 collision_layer = 2
 collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_2c8no")
+Area2D = NodePath("Area2D")
 DamageComponent = NodePath("DamageComponent")
 HealthComponent = NodePath("HealthComponent")
-HitboxComponent = NodePath("HitboxComponent")
-_navigationAgent = NodePath("NavigationAgent2D")
+NavigationAgent = NodePath("NavigationAgent2D")
 _deathVfx = ExtResource("2_qtb0f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -33,18 +32,16 @@ shape = SubResource("CircleShape2D_trmry")
 radius = 4.0
 max_speed = 80.0
 
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_kl1xe")
+
 [node name="DamageComponent" type="Node" parent="."]
 script = ExtResource("3_u4vhe")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("2_6x0d2")
-
-[node name="HitboxComponent" type="Area2D" parent="."]
-script = ExtResource("6_6po12")
-TargetGroups = ["Player"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
-shape = SubResource("CircleShape2D_kl1xe")
 
 [node name="PhysicsInterpolation" type="Node2D" parent="." node_paths=PackedStringArray("target")]
 script = ExtResource("6_1uydy")
