@@ -23,8 +23,8 @@ driver/output_latency=35
 
 [autoload]
 
-Game="*res://scripts/singletons/Game.cs"
-ProjectileSystem="*res://scripts/singletons/projectile_system.gd"
+Game="*res://scripts/Game.cs"
+ProjectileSystem="*res://scripts/projectile_system.gd"
 
 [display]
 
