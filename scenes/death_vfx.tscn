@@ -1,6 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://cyrld2bj2no50"]
 
-[ext_resource type="Script" path="res://scripts/death_vfx.gd" id="1_gha55"]
+[sub_resource type="GDScript" id="GDScript_uf72m"]
+script/source = "extends Node2D
+
+func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
+	queue_free()
+"
 
 [sub_resource type="Gradient" id="Gradient_pv2mf"]
 offsets = PackedFloat32Array(0.755556, 1)
@@ -47,10 +52,9 @@ _data = {
 }
 
 [node name="DeathVfx" type="Node2D"]
-script = ExtResource("1_gha55")
+script = SubResource("GDScript_uf72m")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-emitting = false
 process_material = SubResource("ParticleProcessMaterial_lnxgn")
 lifetime = 2.0
 one_shot = true
