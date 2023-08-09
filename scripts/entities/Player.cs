@@ -3,6 +3,9 @@ namespace SharpGame;
 [GlobalClass]
 public sealed partial class Player : CharacterBody2D
 {
+    [Signal]
+    public delegate void ScoreChangedEventHandler(int score);
+
     [Export]
     public DamageComponent DamageComponent;
 
@@ -14,9 +17,6 @@ public sealed partial class Player : CharacterBody2D
 
     public override void _Ready()
     {
-        Game game = GetNode<Game>("/root/Game");
-        game.Player = this;
-
         ProjectileComponent.OnCollision += OnCollision;
     }
 
@@ -43,5 +43,7 @@ public sealed partial class Player : CharacterBody2D
 
         Flyer flyer = (Flyer)collider;
         DamageComponent.ApplyDamage(flyer.HealthComponent);
+
+        EmitSignal(SignalName.ScoreChanged, flyer.ScoreOnKill);
     }
 }

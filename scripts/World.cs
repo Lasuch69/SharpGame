@@ -2,24 +2,45 @@ namespace SharpGame;
 
 public partial class World : Node
 {
-	[Signal]
-	public delegate void WaveStartedEventHandler(int wave);
+    [Export]
+    public Player Player;
 
-	public int Wave { get => _wave; }
+    [Export]
+    public Ui Ui;
 
-	int _wave = 1;
+    [Export]
+    public Spawner Spawner;
 
-	[Export]
-	Spawner _spawner = null;
+    int _score = 0;
+    int _wave = 1;
 
-	public override void _Ready()
-	{
-		_spawner.StartWave(_wave);
+    public override void _Ready()
+    {
+        Player.HealthComponent.HealthChanged += PlayerHealthChanged;
+        Player.ScoreChanged += ScoreChanged;
+        Spawner.WaveFinished += WaveFinished;
 
-		_spawner.WaveFinished += () =>
-		{
-			_wave++;
-			_spawner.StartWave(_wave);
-		};
-	}
+        Ui.SetHearts(Player.HealthComponent.GetHealth());
+        Ui.SetScore(_score);
+
+        Spawner.SetPlayer(Player);
+        Spawner.StartWave(_wave);
+    }
+
+    void PlayerHealthChanged(int newHealth, int oldHealth)
+    {
+        Ui.SetHearts(newHealth);
+    }
+
+    void ScoreChanged(int score)
+    {
+        _score += score;
+        Ui.SetScore(_score);
+    }
+
+    void WaveFinished()
+    {
+        _wave++;
+        Spawner.StartWave(_wave);
+    }
 }

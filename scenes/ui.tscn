@@ -1,18 +1,21 @@
 [gd_scene load_steps=6 format=3 uid="uid://0lot5q2epe2c"]
 
+[ext_resource type="Script" path="res://scripts/ui/Ui.cs" id="1_bdkl7"]
 [ext_resource type="Texture2D" uid="uid://bpgort8t0s0d4" path="res://assets/sprites/heart.tres" id="1_oax7v"]
 [ext_resource type="Script" path="res://scripts/ui/Counter.cs" id="1_uw51o"]
 [ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://resources/shaders/SmoothPixel/SmoothPixel.material" id="2_cbsat"]
-[ext_resource type="Script" path="res://scripts/ui/Health.cs" id="2_u8bod"]
-[ext_resource type="Script" path="res://scripts/ui/Score.cs" id="4_pqru4"]
+[ext_resource type="Script" path="res://scripts/ui/HeartContainer.cs" id="2_u8bod"]
 
-[node name="UI" type="Control"]
+[node name="Ui" type="Control" node_paths=PackedStringArray("_heartContainer", "_scoreLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_bdkl7")
+_heartContainer = NodePath("Health/HeartContainer")
+_scoreLabel = NodePath("Score/Score")
 
 [node name="Counter" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -38,7 +41,7 @@ offset_bottom = 48.0
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 
-[node name="Health" type="GridContainer" parent="Health"]
+[node name="HeartContainer" type="GridContainer" parent="Health"]
 texture_filter = 2
 layout_mode = 2
 theme_override_constants/h_separation = 0
@@ -65,7 +68,6 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 text = "000"
 horizontal_alignment = 2
-script = ExtResource("4_pqru4")
 
 [node name="Actions" type="MarginContainer" parent="."]
 layout_mode = 1

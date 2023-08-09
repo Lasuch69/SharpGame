@@ -26,18 +26,11 @@ public partial class Flyer : CharacterBody2D
 
     Player _player;
 
-    Game _game;
-
     double _time = 0.0;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        _game = GetNode<Game>("/root/Game");
-
-        _player = _game.Player;
-        _game.PlayerChanged += (player) => _player = player;
-
         Area2D.BodyEntered += OnBodyEntered;
         HealthComponent.HealthEmpty += OnHealthEmpty;
 
@@ -70,6 +63,11 @@ public partial class Flyer : CharacterBody2D
         MoveAndSlide();
     }
 
+    public void SetPlayer(Player player)
+    {
+        _player = player;
+    }
+
     void OnBodyEntered(Node2D body)
     {
         if (body is not Player)
@@ -81,8 +79,6 @@ public partial class Flyer : CharacterBody2D
 
     void OnHealthEmpty()
     {
-        _game.Score += ScoreOnKill;
-
         if (_deathVfx != null)
         {
             Node2D instance = (Node2D)_deathVfx.Instantiate();
