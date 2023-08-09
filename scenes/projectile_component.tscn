@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccya88lhnc0we"]
+
+[ext_resource type="Script" path="res://scripts/components/ProjectileComponent.cs" id="1_mcdxb"]
+[ext_resource type="Script" path="res://scripts/projectile_component_wrapper.gd" id="2_ppf4f"]
+
+[node name="ProjectileComponent" type="Node"]
+script = ExtResource("1_mcdxb")
+
+[node name="ProjectileComponentWrapper" type="Node" parent="."]
+script = ExtResource("2_ppf4f")
