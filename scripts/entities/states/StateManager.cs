@@ -4,7 +4,7 @@ namespace SharpGame;
 public partial class StateManager : Node
 {
     [Export]
-    public CharacterBody2D Entity;
+    public Player Entity;
 
     [Export]
     public State StartState;
@@ -13,6 +13,11 @@ public partial class StateManager : Node
 
     public override void _Ready()
     {
+        Dead dead = new Dead();
+        AddChild(dead);
+        dead.Name = "Dead";
+        Entity.HealthComponent.HealthEmpty += () => ChangeState(dead);
+
         var children = GetChildren();
 
         foreach (State child in children)

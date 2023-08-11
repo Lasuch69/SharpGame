@@ -11,11 +11,15 @@ public partial class World : Node
     [Export]
     public Spawner Spawner;
 
+    [Export]
+    AnimationPlayer _animationPlayer;
+
     int _score = 0;
     int _wave = 1;
 
     public override void _Ready()
     {
+        Player.HealthComponent.HealthEmpty += PlayerHealthEmpty;
         Player.HealthComponent.HealthChanged += PlayerHealthChanged;
         Player.ScoreChanged += ScoreChanged;
         Spawner.WaveFinished += WaveFinished;
@@ -25,6 +29,11 @@ public partial class World : Node
 
         Spawner.SetPlayer(Player);
         Spawner.StartWave(_wave);
+    }
+
+    void PlayerHealthEmpty()
+    {
+        _animationPlayer.Play("root_anim/game_over");
     }
 
     void PlayerHealthChanged(int newHealth, int oldHealth)
