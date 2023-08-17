@@ -21,9 +21,6 @@ public partial class Flyer : CharacterBody2D
     [Export]
     public NavigationAgent2D NavigationAgent;
 
-    [Export]
-    PackedScene _deathVfx;
-
     Player _player;
 
     double _time = 0.0;
@@ -79,13 +76,14 @@ public partial class Flyer : CharacterBody2D
 
     void OnHealthEmpty()
     {
-        if (_deathVfx != null)
-        {
-            Node2D instance = (Node2D)_deathVfx.Instantiate();
-            instance.Position = Position;
+        PackedScene effectPackedScene = (PackedScene)GD.Load("res://scenes/visual_effects/explosion/explosion.tscn");
 
-            GetParent().AddChild(instance);
-        }
+        Node2D effectInstance = (Node2D)effectPackedScene.Instantiate();
+
+        effectInstance.Position = Position;
+
+        GetParent().AddChild(effectInstance);
+        effectInstance.Call("start");
 
         QueueFree();
     }

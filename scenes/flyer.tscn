@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6pcofl3e18cs"]
+[gd_scene load_steps=9 format=3 uid="uid://b6pcofl3e18cs"]
 
 [ext_resource type="Script" path="res://scripts/entities/Flyer.cs" id="1_2c8no"]
 [ext_resource type="SpriteFrames" uid="uid://723dr8pvca3g" path="res://resources/flyer_anim.tres" id="1_w6ukf"]
 [ext_resource type="Script" path="res://scripts/components/HealthComponent.cs" id="2_6x0d2"]
-[ext_resource type="PackedScene" uid="uid://cyrld2bj2no50" path="res://scenes/death_vfx.tscn" id="2_qtb0f"]
 [ext_resource type="Script" path="res://scripts/components/DamageComponent.cs" id="3_u4vhe"]
 [ext_resource type="Script" path="res://scripts/physics_interpolation.gd" id="6_1uydy"]
 [ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://assets/shaders/SmoothPixel/SmoothPixel.material" id="9_ysyve"]
@@ -23,7 +22,6 @@ Area2D = NodePath("Area2D")
 DamageComponent = NodePath("DamageComponent")
 HealthComponent = NodePath("HealthComponent")
 NavigationAgent = NodePath("NavigationAgent2D")
-_deathVfx = ExtResource("2_qtb0f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_trmry")
