@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://scripts/components/HealthComponent.cs" id="3_0t41e"]
 [ext_resource type="PackedScene" uid="uid://ccya88lhnc0we" path="res://scenes/projectile_component.tscn" id="3_vthue"]
 [ext_resource type="Script" path="res://scripts/physics_interpolation.gd" id="4_7fncy"]
-[ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://resources/shaders/SmoothPixel/SmoothPixel.material" id="5_4uogm"]
+[ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://assets/shaders/SmoothPixel/SmoothPixel.material" id="5_4uogm"]
 [ext_resource type="Script" path="res://scripts/entities/states/StateManager.cs" id="7_wys87"]
 [ext_resource type="Script" path="res://scripts/entities/states/Idle.cs" id="8_6ulpx"]
 [ext_resource type="Script" path="res://scripts/entities/states/Walk.cs" id="9_4sb3d"]
@@ -42,7 +42,6 @@ script = ExtResource("4_7fncy")
 target = NodePath("..")
 
 [node name="Sprite2D" type="Sprite2D" parent="PhysicsInterpolation"]
-texture_filter = 2
 material = ExtResource("5_4uogm")
 texture = ExtResource("2_hnpgu")
 

@@ -8,7 +8,6 @@
 script = ExtResource("2_id5qd")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-texture_filter = 2
 material = ExtResource("2_g0tw2")
 emitting = false
 process_material = ExtResource("1_qjqwc")

@@ -46,7 +46,6 @@ script = ExtResource("6_1uydy")
 target = NodePath("..")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PhysicsInterpolation"]
-texture_filter = 2
 material = ExtResource("9_ysyve")
 position = Vector2(0, -1)
 sprite_frames = ExtResource("1_w6ukf")
