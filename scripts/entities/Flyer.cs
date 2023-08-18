@@ -13,9 +13,6 @@ public partial class Flyer : CharacterBody2D
     public Area2D Area2D;
 
     [Export]
-    public DamageComponent DamageComponent;
-
-    [Export]
     public HealthComponent HealthComponent;
 
     [Export]
@@ -71,7 +68,7 @@ public partial class Flyer : CharacterBody2D
             return;
 
         Player player = (Player)body;
-        DamageComponent.ApplyDamage(player.HealthComponent);
+        player.HealthComponent.Damage(1);
     }
 
     void OnHealthEmpty()

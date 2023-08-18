@@ -4,7 +4,7 @@ namespace SharpGame;
 public partial class HealthComponent : Node
 {
     [Signal]
-    public delegate void HealthChangedEventHandler(int newhealth, int oldHealth);
+    public delegate void HealthChangedEventHandler(int oldHealth, int newHealth);
 
     [Signal]
     public delegate void HealthEmptyEventHandler();
@@ -15,20 +15,29 @@ public partial class HealthComponent : Node
     [Export]
     int _health = 1;
 
+    public void Damage(int health)
+    {
+        SetHealth(GetHealth() - health);
+    }
+
+    public void Heal(int health)
+    {
+        SetHealth(GetHealth() + health);
+    }
+
     public void SetHealth(int health)
     {
         int oldHealth = _health;
-
         _health = Mathf.Clamp(health, 0, _maxHealth);
 
-        if (_health == oldHealth)
-            return;
+        EmitSignal(SignalName.HealthChanged, oldHealth, _health);
 
-        if (_health == 0)
+        if (_health <= 0)
             EmitSignal(SignalName.HealthEmpty);
-
-        EmitSignal(SignalName.HealthChanged, _health, oldHealth);
     }
 
-    public int GetHealth() => _health;
+    public int GetHealth()
+    {
+        return _health;
+    }
 }

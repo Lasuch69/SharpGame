@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://b6pcofl3e18cs"]
+[gd_scene load_steps=8 format=3 uid="uid://b6pcofl3e18cs"]
 
 [ext_resource type="Script" path="res://scripts/entities/Flyer.cs" id="1_2c8no"]
 [ext_resource type="SpriteFrames" uid="uid://723dr8pvca3g" path="res://resources/flyer_anim.tres" id="1_w6ukf"]
 [ext_resource type="Script" path="res://scripts/components/HealthComponent.cs" id="2_6x0d2"]
-[ext_resource type="Script" path="res://scripts/components/DamageComponent.cs" id="3_u4vhe"]
 [ext_resource type="Script" path="res://scripts/physics_interpolation.gd" id="6_1uydy"]
 [ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://assets/shaders/SmoothPixel/SmoothPixel.material" id="9_ysyve"]
 
@@ -13,13 +12,12 @@ radius = 4.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_kl1xe"]
 radius = 4.0
 
-[node name="Flyer" type="CharacterBody2D" node_paths=PackedStringArray("Area2D", "DamageComponent", "HealthComponent", "NavigationAgent") groups=["Enemy"]]
+[node name="Flyer" type="CharacterBody2D" node_paths=PackedStringArray("Area2D", "HealthComponent", "NavigationAgent") groups=["Enemy"]]
 collision_layer = 2
 collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_2c8no")
 Area2D = NodePath("Area2D")
-DamageComponent = NodePath("DamageComponent")
 HealthComponent = NodePath("HealthComponent")
 NavigationAgent = NodePath("NavigationAgent2D")
 
@@ -34,9 +32,6 @@ max_speed = 80.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_kl1xe")
-
-[node name="DamageComponent" type="Node" parent="."]
-script = ExtResource("3_u4vhe")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("2_6x0d2")

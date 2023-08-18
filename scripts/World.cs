@@ -36,7 +36,7 @@ public partial class World : Node
         _animationPlayer.Play("root_anim/game_over");
     }
 
-    void PlayerHealthChanged(int newHealth, int oldHealth)
+    void PlayerHealthChanged(int oldHealth, int newHealth)
     {
         Ui.SetHearts(newHealth);
     }

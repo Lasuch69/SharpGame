@@ -1,8 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://bdiobw2ao84e3"]
+[gd_scene load_steps=14 format=3 uid="uid://bdiobw2ao84e3"]
 
 [ext_resource type="Script" path="res://scripts/entities/Player.cs" id="1_kuu2q"]
 [ext_resource type="Texture2D" uid="uid://dif4f7yednbgr" path="res://assets/sprites/player.png" id="2_hnpgu"]
-[ext_resource type="Script" path="res://scripts/components/DamageComponent.cs" id="2_iiwel"]
 [ext_resource type="Script" path="res://scripts/components/HealthComponent.cs" id="3_0t41e"]
 [ext_resource type="PackedScene" uid="uid://ccya88lhnc0we" path="res://scenes/projectile_component.tscn" id="3_vthue"]
 [ext_resource type="Script" path="res://scripts/physics_interpolation.gd" id="4_7fncy"]
@@ -18,17 +17,13 @@
 radius = 6.0
 height = 16.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("DamageComponent", "HealthComponent", "ProjectileComponent") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("HealthComponent", "ProjectileComponent") groups=["Player"]]
 script = ExtResource("1_kuu2q")
-DamageComponent = NodePath("DamageComponent")
 HealthComponent = NodePath("HealthComponent")
 ProjectileComponent = NodePath("ProjectileComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_s5uvd")
-
-[node name="DamageComponent" type="Node" parent="."]
-script = ExtResource("2_iiwel")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("3_0t41e")

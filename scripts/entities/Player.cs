@@ -7,9 +7,6 @@ public sealed partial class Player : CharacterBody2D
     public delegate void ScoreChangedEventHandler(int score);
 
     [Export]
-    public DamageComponent DamageComponent;
-
-    [Export]
     public HealthComponent HealthComponent;
 
     [Export]
@@ -42,7 +39,7 @@ public sealed partial class Player : CharacterBody2D
             return;
 
         Flyer flyer = (Flyer)collider;
-        DamageComponent.ApplyDamage(flyer.HealthComponent);
+        flyer.HealthComponent.Damage(1);
 
         EmitSignal(SignalName.ScoreChanged, flyer.ScoreOnKill);
     }
