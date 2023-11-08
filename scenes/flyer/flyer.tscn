@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://b6pcofl3e18cs"]
+
+[ext_resource type="Script" path="res://scenes/flyer/Flyer.cs" id="1_2c8no"]
+[ext_resource type="Script" path="res://scripts/cs/HealthComponent.cs" id="2_6x0d2"]
+[ext_resource type="SpriteFrames" uid="uid://723dr8pvca3g" path="res://scenes/flyer/flyer_anim.tres" id="5_4tacf"]
+[ext_resource type="Script" path="res://scripts/physics_interpolation.gd" id="6_1uydy"]
+[ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://shaders/smooth_pixel/SmoothPixel.material" id="9_ysyve"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_trmry"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kl1xe"]
+radius = 4.0
+
+[node name="Flyer" type="CharacterBody2D" node_paths=PackedStringArray("Area2D", "HealthComponent", "NavigationAgent") groups=["Enemy"]]
+collision_layer = 2
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_2c8no")
+Area2D = NodePath("Area2D")
+HealthComponent = NodePath("HealthComponent")
+NavigationAgent = NodePath("NavigationAgent2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_trmry")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+radius = 4.0
+max_speed = 80.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_kl1xe")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_6x0d2")
+
+[node name="PhysicsInterpolation" type="Node2D" parent="."]
+script = ExtResource("6_1uydy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PhysicsInterpolation"]
+material = ExtResource("9_ysyve")
+position = Vector2(0, -1)
+sprite_frames = ExtResource("5_4tacf")
+animation = &"Idle"
+autoplay = "Idle"
+frame_progress = 0.968872

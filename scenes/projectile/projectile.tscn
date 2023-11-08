@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://wxe1mjfefwkr"]
+
+[ext_resource type="Script" path="res://scenes/projectile/Projectile.cs" id="1_mhm1p"]
+[ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://shaders/smooth_pixel/SmoothPixel.material" id="2_f2vi0"]
+[ext_resource type="Texture2D" uid="uid://cim2fverjaeax" path="res://scenes/projectile/projectile.tres" id="3_ccwp2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gapn2"]
+radius = 3.16228
+
+[node name="Projectile" type="Area2D" node_paths=PackedStringArray("_projectileSprite")]
+script = ExtResource("1_mhm1p")
+_projectileSprite = NodePath("Sprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gapn2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = ExtResource("2_f2vi0")
+texture = ExtResource("3_ccwp2")

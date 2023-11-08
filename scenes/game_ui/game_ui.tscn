@@ -1,0 +1,88 @@
+[gd_scene load_steps=6 format=3 uid="uid://0lot5q2epe2c"]
+
+[ext_resource type="Script" path="res://scenes/game_ui/GameUI.cs" id="1_r2hk5"]
+[ext_resource type="Script" path="res://scenes/game_ui/Counter.cs" id="2_vr10u"]
+[ext_resource type="Script" path="res://scenes/game_ui/HeartContainer.cs" id="3_g2vug"]
+[ext_resource type="Texture2D" uid="uid://bpgort8t0s0d4" path="res://assets/sprites/heart.tres" id="4_bo086"]
+[ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://shaders/smooth_pixel/SmoothPixel.material" id="5_1i6xd"]
+
+[node name="GameUI" type="Control" node_paths=PackedStringArray("_heartContainer", "_scoreLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r2hk5")
+_heartContainer = NodePath("Health/HeartContainer")
+_scoreLabel = NodePath("Score/Score")
+
+[node name="Counter" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 16
+
+[node name="Counter" type="Label" parent="Counter"]
+layout_mode = 2
+text = "00:00"
+horizontal_alignment = 1
+script = ExtResource("2_vr10u")
+
+[node name="Health" type="MarginContainer" parent="."]
+layout_mode = 1
+offset_right = 120.0
+offset_bottom = 48.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+
+[node name="HeartContainer" type="GridContainer" parent="Health"]
+texture_filter = 2
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 6
+script = ExtResource("3_g2vug")
+HeartTexture = ExtResource("4_bo086")
+HeartMaterial = ExtResource("5_1i6xd")
+
+[node name="Score" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Score" type="Label" parent="Score"]
+layout_mode = 2
+text = "000"
+horizontal_alignment = 2
+
+[node name="Actions" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -85.0
+offset_top = -40.0
+offset_right = 85.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Actions"]
+layout_mode = 2
+alignment = 1

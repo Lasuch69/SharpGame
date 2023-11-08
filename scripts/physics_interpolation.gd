@@ -1,14 +1,9 @@
 extends Node2D
 
-@export var target: CharacterBody2D = null
-
-var _physics_delta: float = 0.0
+@export
+var character_body: CharacterBody2D
 
 func _process(_delta: float) -> void:
-	var motion: Vector2 = target.velocity * _physics_delta
+	var motion: Vector2 = character_body.velocity * get_physics_process_delta_time()
 	var fraction: float = Engine.get_physics_interpolation_fraction()
-	
 	position = lerp(Vector2.ZERO, motion, fraction)
-
-func _physics_process(delta: float) -> void:
-	_physics_delta = delta

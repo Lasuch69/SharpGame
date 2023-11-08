@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://b70ofo5catg3r"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_7i62w"]
+[ext_resource type="PackedScene" uid="uid://dqhy5euguvj8y" path="res://scenes/menu/menu.tscn" id="2_dhvgr"]
+[ext_resource type="Script" path="res://scripts/threaded_loader.gd" id="2_tibot"]
+[ext_resource type="Script" path="res://scripts/game_world.gd" id="3_8lp1e"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_7i62w")
+
+[node name="ThreadedLoader" type="Node" parent="."]
+script = ExtResource("2_tibot")
+
+[node name="Menu" parent="." instance=ExtResource("2_dhvgr")]
+unique_name_in_owner = true
+
+[node name="GameWorld" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_8lp1e")

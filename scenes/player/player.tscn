@@ -1,0 +1,76 @@
+[gd_scene load_steps=14 format=3 uid="uid://bdiobw2ao84e3"]
+
+[ext_resource type="Script" path="res://scenes/player/Player.cs" id="1_jx766"]
+[ext_resource type="Script" path="res://scripts/cs/HealthComponent.cs" id="2_oum4d"]
+[ext_resource type="Script" path="res://scripts/physics_interpolation.gd" id="4_2wesj"]
+[ext_resource type="Texture2D" uid="uid://dif4f7yednbgr" path="res://scenes/player/player.png" id="5_meudl"]
+[ext_resource type="Material" uid="uid://bsh0ia72y811j" path="res://shaders/smooth_pixel/SmoothPixel.material" id="5_rbtkd"]
+[ext_resource type="Script" path="res://scripts/cs/StateManager.cs" id="6_f6u7e"]
+[ext_resource type="Script" path="res://scenes/player/states/Idle.cs" id="7_5wrvr"]
+[ext_resource type="Script" path="res://scenes/player/states/Walk.cs" id="8_06h0o"]
+[ext_resource type="Script" path="res://scenes/player/states/Jump.cs" id="9_4i7af"]
+[ext_resource type="Script" path="res://scenes/player/states/Fall.cs" id="10_1wdlq"]
+[ext_resource type="Script" path="res://scenes/player/states/WallSlide.cs" id="11_au7ie"]
+[ext_resource type="Script" path="res://scripts/cs/ProjectileComponent.cs" id="12_l6fb3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s5uvd"]
+radius = 6.0
+height = 16.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("HealthComponent", "ProjectileComponent") groups=["Player"]]
+script = ExtResource("1_jx766")
+HealthComponent = NodePath("HealthComponent")
+ProjectileComponent = NodePath("ProjectileComponent")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_oum4d")
+_maxHealth = 3
+_health = 3
+
+[node name="ProjectileComponent" type="Node" parent="."]
+script = ExtResource("12_l6fb3")
+ScenePath = "res://scenes/projectile/projectile.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_s5uvd")
+
+[node name="PhysicsInterpolation" type="Node2D" parent="." node_paths=PackedStringArray("character_body")]
+script = ExtResource("4_2wesj")
+character_body = NodePath("..")
+
+[node name="Sprite2D" type="Sprite2D" parent="PhysicsInterpolation"]
+material = ExtResource("5_rbtkd")
+texture = ExtResource("5_meudl")
+
+[node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("CharacterBody2D", "StartState")]
+script = ExtResource("6_f6u7e")
+CharacterBody2D = NodePath("..")
+StartState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateManager" node_paths=PackedStringArray("_fall", "_jump", "_walk")]
+script = ExtResource("7_5wrvr")
+_fall = NodePath("../Fall")
+_jump = NodePath("../Jump")
+_walk = NodePath("../Walk")
+
+[node name="Walk" type="Node" parent="StateManager" node_paths=PackedStringArray("_fall", "_idle", "_jump")]
+script = ExtResource("8_06h0o")
+_fall = NodePath("../Fall")
+_idle = NodePath("../Idle")
+_jump = NodePath("../Jump")
+
+[node name="Jump" type="Node" parent="StateManager" node_paths=PackedStringArray("_fall")]
+script = ExtResource("9_4i7af")
+_fall = NodePath("../Fall")
+
+[node name="Fall" type="Node" parent="StateManager" node_paths=PackedStringArray("_idle", "_walk", "_wallSlide")]
+script = ExtResource("10_1wdlq")
+_idle = NodePath("../Idle")
+_walk = NodePath("../Walk")
+_wallSlide = NodePath("../WallSlide")
+
+[node name="WallSlide" type="Node" parent="StateManager" node_paths=PackedStringArray("_fall", "_idle", "_walk")]
+script = ExtResource("11_au7ie")
+_fall = NodePath("../Fall")
+_idle = NodePath("../Idle")
+_walk = NodePath("../Walk")
